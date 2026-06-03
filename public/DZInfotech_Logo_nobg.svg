@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 120" fill="none">
+  <!-- Stylized DZ Icon reflecting PDF structure -->
+  <g transform="translate(15, 10)">
+    <!-- Tech backing grid -->
+    <path d="M 30 5 L 80 5 L 105 48 L 80 91 L 30 91 L 5 48 Z" fill="#2563EB" fill-opacity="0.06" stroke="#2563EB" stroke-width="1.5" stroke-dasharray="4 2"/>
+    
+    <!-- D shape in Cobalt Blue -->
+    <path d="M 32 24 L 56 24 C 68 24 76 32 76 48 C 76 64 68 72 56 72 L 32 72 Z M 44 36 L 44 60 L 54 60 C 60 60 64 56 64 48 C 64 40 60 36 54 36 Z" fill="#2563EB" stroke-width="0.5"/>
+    
+    <!-- Z shape overlay in Safety Orange -->
+    <path d="M 46 32 L 72 32 L 50 64 L 76 64" stroke="#EA580C" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <!-- Typography with exact text from PDF: DZ INFOTECH -->
+  <text x="140" y="62" font-family="'Outfit', sans-serif" font-size="34" font-weight="800" fill="#F8FAFC" letter-spacing="-0.03em">DZ</text>
+  <text x="190" y="62" font-family="'Outfit', sans-serif" font-size="34" font-weight="300" fill="#EA580C" letter-spacing="-0.03em">INFOTECH</text>
+  
+  <text x="142" y="85" font-family="'Inter', sans-serif" font-size="12" font-weight="600" fill="#94A3B8" letter-spacing="0.2em">TECH SOLUTIONS</text>
+</svg>
