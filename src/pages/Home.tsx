@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { 
   Cpu, Smartphone, Zap, Bot, ArrowRight, Play, 
-  Layers, Landmark, ShieldCheck, FileSpreadsheet, Truck, Quote
+  Landmark, ShieldCheck, FileSpreadsheet, Truck, Quote,
+  Activity, Database
 } from 'lucide-react';
 import { fadeInUp, staggerContainer } from '../animations/variants';
 
@@ -11,22 +12,30 @@ const capabilities = [
   {
     icon: Cpu,
     title: "Custom Software Solutions",
-    description: "Tailored enterprise solutions designed to solve specific industry bottlenecks and centralize databases."
+    description: "Tailored enterprise solutions designed to solve specific industry bottlenecks and centralize databases. We replace fragmented legacy processes with clean cloud pipelines.",
+    className: "md:col-span-2",
+    badge: "Enterprise"
   },
   {
     icon: Smartphone,
     title: "Mobile Applications",
-    description: "Powerful, offline-first mobile tools that empower field engineers and site operations."
+    description: "Powerful, offline-first mobile tools that empower field engineers and site operations. Works with zero cellular bandwidth.",
+    className: "md:col-span-1",
+    badge: "Offline-First"
   },
   {
     icon: Zap,
     title: "Workflow Automation",
-    description: "Eliminating manual errors by digitizing fragmented communication, approvals, and reporting."
+    description: "Eliminate human input errors by digitizing approval chains, field log routing, and operational schedules.",
+    className: "md:col-span-1",
+    badge: "Automation"
   },
   {
     icon: Bot,
     title: "AI-Based Intelligence",
-    description: "Future-ready intelligence layers that provide predictive insights and parse heavy document lines."
+    description: "Future-ready intelligence layers that estimate project variables, parse heavy government tender documents, and flag fuel/material transaction leaks automatically.",
+    className: "md:col-span-2",
+    badge: "Artificial Intelligence"
   }
 ];
 
@@ -43,9 +52,9 @@ const simulatorTabs = [
       materials: [
         { item: "Cement (OPC)", quantity: "250 Bags", status: "Verified" },
         { item: "Reinforcement Steel", quantity: "12.5 Tons", status: "Verified" },
-        { item: "Diesel fuel (Asset-14)", quantity: "450 Litres", status: "Awaiting QC" }
+        { item: "Diesel fuel (Asset-14)", quantity: "450 Litres", status: "QC Approved" }
       ],
-      progress: "84% complete"
+      progress: 84
     }
   },
   {
@@ -76,7 +85,7 @@ const simulatorTabs = [
       recentTransactions: [
         { party: "Somnath Cement Agency", amount: "₹4,20,000", status: "Approved" },
         { party: "Bharat Petroleum Fuel Station", amount: "₹1,85,000", status: "Approved" },
-        { party: "Ganesh Transport Corp", amount: "₹2,50,000", status: "Pending Verification" }
+        { party: "Ganesh Transport Corp", amount: "₹2,50,000", status: "Pending" }
       ]
     }
   },
@@ -101,49 +110,41 @@ export default function Home() {
   const [activeTab, setActiveTab] = useState(simulatorTabs[0]);
 
   return (
-    <div className="overflow-x-hidden">
+    <div className="overflow-x-hidden relative">
       
+      {/* Background Grid Accent */}
+      <div className="absolute top-0 inset-x-0 h-[800px] bg-grid-mesh [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] pointer-events-none" />
+
       {/* Hero Section */}
-      <section className="relative min-h-[90vh] flex items-center justify-center pt-16 pb-20 md:pb-28">
+      <section className="relative min-h-[92vh] flex items-center justify-center pt-24 pb-20 md:pb-28">
         
         {/* Glow Elements */}
-        <div className="absolute top-1/4 left-1/4 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-accent/5 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute bottom-1/4 right-1/4 translate-x-1/2 translate-y-1/2 w-96 h-96 bg-secondary/5 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-1/4 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[450px] h-[450px] bg-accent/8 rounded-full blur-[120px] pointer-events-none" />
+        <div className="absolute bottom-1/4 right-1/4 translate-x-1/2 translate-y-1/2 w-[450px] h-[450px] bg-accent-light/5 rounded-full blur-[120px] pointer-events-none" />
         
-        {/* Tech Grid Backdrop */}
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff03_1px,transparent_1px),linear-gradient(to_bottom,#ffffff03_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]" />
-
         <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10 w-full">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
             
             {/* Left Content */}
             <motion.div 
               initial="hidden"
               animate="visible"
               variants={staggerContainer}
-              className="lg:col-span-7 flex flex-col items-start gap-6 text-left"
+              className="lg:col-span-7 flex flex-col items-start gap-8 text-left"
             >
-              <motion.span 
-                variants={fadeInUp}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase border border-accent/20 bg-accent/5 text-accent-light"
-              >
-                <Layers className="h-3 w-3" />
-                DZ INFOTECH
-              </motion.span>
-              
               <motion.h1 
                 variants={fadeInUp}
                 className="text-4xl sm:text-5xl lg:text-6xl font-display font-extrabold tracking-tight text-primary leading-[1.08]"
               >
-                Building Smart <em className="text-secondary not-italic">Digital Solutions</em> <br />
-                for Real-World Industries.
+                Building Smart <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent via-accent-light to-secondary-light">Digital Solutions</span> <br />
+                for Heavy Industries.
               </motion.h1>
               
               <motion.p 
                 variants={fadeInUp}
                 className="text-lg text-primary-muted font-normal leading-relaxed max-w-xl"
               >
-                We design and develop technology that simplifies operations, improves efficiency, and gives businesses complete control over their workflows.
+                We design and engineer high-performance systems that simplify field operations, eliminate financial leakage, and give enterprises complete database control.
               </motion.p>
               
               <motion.div 
@@ -152,87 +153,95 @@ export default function Home() {
               >
                 <Link 
                   to="/services" 
-                  className="flex items-center justify-center gap-2 text-sm font-semibold tracking-wide bg-accent text-white px-7 py-4 rounded-theme-sm border border-accent/20 transition-all hover:bg-accent-light hover:-translate-y-0.5 hover:shadow-glow-accent w-full sm:w-auto"
+                  className="flex items-center justify-center gap-2 text-sm font-bold tracking-wide bg-gradient-to-r from-accent to-accent-light text-white px-8 py-4 rounded-full shadow-lg transition-all duration-300 hover:shadow-glow-accent hover:-translate-y-0.5 hover:brightness-110 w-full sm:w-auto"
                 >
-                  Explore Our Products
+                  Explore Capabilities
                   <ArrowRight className="h-4 w-4" />
                 </Link>
                 <Link 
                   to="/product" 
-                  className="flex items-center justify-center gap-2 text-sm font-semibold tracking-wide bg-card border border-border text-primary px-7 py-4 rounded-theme-sm transition-all hover:bg-card-hover hover:border-secondary/40 w-full sm:w-auto hover:shadow-glow-secondary"
+                  className="flex items-center justify-center gap-2 text-sm font-bold tracking-wide bg-card border border-border text-primary px-8 py-4 rounded-full transition-all duration-300 hover:bg-card-hover w-full sm:w-auto shadow-sm"
                 >
-                  View ConTrack
+                  Discover ConTrack
                 </Link>
               </motion.div>
 
               {/* Quick Specs */}
               <motion.div 
                 variants={fadeInUp}
-                className="grid grid-cols-3 gap-8 pt-8 border-t border-border/80 w-full"
+                className="grid grid-cols-3 gap-8 pt-8 border-t border-border w-full"
               >
                 <div>
-                  <h3 className="text-2xl font-bold font-display text-primary">15+</h3>
-                  <p className="text-xs text-primary-muted uppercase tracking-wider mt-1">Major Contractors Onboard</p>
+                  <h3 className="text-3xl font-extrabold font-display text-primary">15+</h3>
+                  <p className="text-[10px] text-primary-dim uppercase tracking-wider mt-1 font-bold">Active Contractors</p>
                 </div>
                 <div>
-                  <h3 className="text-2xl font-bold font-display text-primary">Offline</h3>
-                  <p className="text-xs text-primary-muted uppercase tracking-wider mt-1">Remote Field Sync</p>
+                  <h3 className="text-3xl font-extrabold font-display text-primary">Offline</h3>
+                  <p className="text-[10px] text-primary-dim uppercase tracking-wider mt-1 font-bold">Field-First Sync</p>
                 </div>
                 <div>
-                  <h3 className="text-2xl font-bold font-display text-primary">AI</h3>
-                  <p className="text-xs text-primary-muted uppercase tracking-wider mt-1">Schedule-B Parser</p>
+                  <h3 className="text-3xl font-extrabold font-display text-primary">AI</h3>
+                  <p className="text-[10px] text-primary-dim uppercase tracking-wider mt-1 font-bold">Tender Analytics</p>
                 </div>
               </motion.div>
             </motion.div>
 
-            {/* Right Graphic Panel (Tablet Mockup) */}
+            {/* Right Graphic Panel (Modern SaaS Screen Mockup) */}
             <motion.div 
-              initial={{ opacity: 0, x: 30 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ type: "spring", stiffness: 60, damping: 15 }}
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              transition={{ type: "spring", stiffness: 60, damping: 15, delay: 0.2 }}
               className="lg:col-span-5 relative"
             >
-              <div className="relative mx-auto max-w-[340px] lg:max-w-none bg-card border border-border rounded-theme-lg p-3 shadow-2xl glow-accent">
-                <div className="bg-[#05070a] border border-border/80 rounded-theme-md overflow-hidden aspect-[4/3] flex flex-col">
-                  {/* Top bar */}
-                  <div className="bg-[#0c0e15] border-b border-border/50 px-4 py-2.5 flex items-center justify-between text-[10px] text-primary-muted">
-                    <span className="font-semibold text-secondary flex items-center gap-1">
-                      <span className="h-1.5 w-1.5 bg-secondary rounded-full animate-pulse" />
-                      ConTrack Live Site Logs
+              <div className="relative mx-auto max-w-[360px] lg:max-w-none glass-panel p-3.5 rounded-[24px] shadow-glow-accent">
+                <div className="bg-background border border-border rounded-[16px] overflow-hidden aspect-[4/3] flex flex-col relative">
+                  
+                  {/* Floating decorative elements */}
+                  <div className="absolute -top-12 -right-12 w-24 h-24 bg-accent/20 rounded-full blur-xl" />
+                  
+                  {/* Dashboard header */}
+                  <div className="bg-card border-b border-border px-4 py-3 flex items-center justify-between text-[10px] relative z-10">
+                    <span className="font-bold text-accent-light flex items-center gap-1.5">
+                      <span className="h-2 w-2 bg-emerald-500 rounded-full animate-pulse" />
+                      ConTrack Live Site Terminal
                     </span>
-                    <span>Site: NH-48 Pkg-3</span>
+                    <span className="text-primary-dim font-semibold font-mono">Site: NH-48-PKG3</span>
                   </div>
-                  {/* Content body */}
-                  <div className="p-4 flex-1 flex flex-col gap-3 font-mono text-[11px]">
-                    <div className="grid grid-cols-2 gap-2 text-left">
-                      <div className="bg-card border border-border/40 p-2.5 rounded-theme-sm">
-                        <span className="text-[9px] uppercase text-primary-muted block">Active Labor Log</span>
-                        <span className="text-sm font-bold text-primary font-display">48 Workers</span>
+                  
+                  {/* Dashboard content */}
+                  <div className="p-4 flex-1 flex flex-col gap-3.5 font-sans relative z-10 text-left">
+                    <div className="grid grid-cols-2 gap-3">
+                      <div className="bg-card border border-border p-3 rounded-[12px]">
+                        <span className="text-[9px] uppercase tracking-wider text-primary-dim block font-bold">Active Labor Log</span>
+                        <span className="text-base font-extrabold text-primary font-display mt-0.5 block">48 Workers</span>
                       </div>
-                      <div className="bg-card border border-border/40 p-2.5 rounded-theme-sm">
-                        <span className="text-[9px] uppercase text-primary-muted block">Fuel Drop Alerts</span>
-                        <span className="text-sm font-bold text-red-400 font-display">0 Alerts</span>
+                      <div className="bg-card border border-border p-3 rounded-[12px]">
+                        <span className="text-[9px] uppercase tracking-wider text-primary-dim block font-bold">Fuel Security</span>
+                        <span className="text-sm font-extrabold text-emerald-400 font-display mt-0.5 block flex items-center gap-1">
+                          <Activity className="h-3.5 w-3.5 text-emerald-400" />
+                          0 Leaks
+                        </span>
                       </div>
                     </div>
+
                     {/* Material logs table */}
-                    <div className="flex-1 bg-card border border-border/40 rounded-theme-sm p-3 flex flex-col justify-between">
-                      <div className="flex items-center justify-between border-b border-border/40 pb-1.5 mb-1.5 text-[9px] uppercase tracking-wider text-primary-muted">
+                    <div className="flex-grow bg-card border border-border rounded-[12px] p-3 flex flex-col justify-between">
+                      <div className="flex items-center justify-between border-b border-border pb-2 text-[9px] uppercase tracking-widest text-primary-dim font-bold">
                         <span>Material Drop</span>
                         <span>Quantity</span>
                       </div>
-                      <div className="flex flex-col gap-1.5">
-                        <div className="flex items-center justify-between text-left">
-                          <span className="text-primary truncate">Cement (OPC)</span>
-                          <span className="text-accent-light font-semibold">250 Bags</span>
+                      <div className="flex flex-col gap-2 mt-2">
+                        <div className="flex items-center justify-between text-[11px]">
+                          <span className="text-primary-muted font-medium">Cement (OPC)</span>
+                          <span className="text-primary font-extrabold">250 Bags</span>
                         </div>
-                        <div className="flex items-center justify-between text-left">
-                          <span className="text-primary truncate">Reinforcement Steel</span>
-                          <span className="text-accent-light font-semibold">12.5 Tons</span>
+                        <div className="flex items-center justify-between text-[11px]">
+                          <span className="text-primary-muted font-medium">Reinforcement Steel</span>
+                          <span className="text-primary font-extrabold">12.5 Tons</span>
                         </div>
                       </div>
-                      <div className="h-2" />
-                      <div className="text-[9px] text-primary-muted text-right italic border-t border-border/40 pt-1.5">
-                        DPR Verified by QC Lead
+                      <div className="text-[9px] text-primary-dim text-right font-medium italic border-t border-border pt-2 mt-2">
+                        System Sync Verified &bull; Active
                       </div>
                     </div>
                   </div>
@@ -244,49 +253,76 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Trust / Marquee Section */}
-      <section className="bg-[#05070A] py-10 border-y border-border/80">
-        <div className="max-w-7xl mx-auto px-6 md:px-12 flex flex-col md:flex-row items-center gap-8 justify-between">
-          <span className="text-xs font-semibold uppercase tracking-widest text-primary-muted shrink-0">
-            Trusted By Leading Brands
-          </span>
-          <div className="flex flex-wrap items-center justify-center gap-x-12 gap-y-6 text-primary-muted font-display font-bold text-lg select-none">
-            <span className="hover:text-primary transition-colors">VADILAL</span>
-            <span className="hover:text-primary transition-colors">ANCHOR</span>
-            <span className="hover:text-primary transition-colors">CREAMBELL</span>
-            <span className="hover:text-primary transition-colors">INDIA DAIRY</span>
-            <span className="hover:text-primary transition-colors">KHUSHBOO</span>
+      {/* Trust / Badge Marquee Section */}
+      <section className="py-16 relative z-10">
+        <div className="max-w-7xl mx-auto px-6 md:px-12 text-center">
+          <h3 className="text-base font-bold uppercase tracking-widest text-accent-light mb-8">
+            Trusted By Infrastructure Leaders
+          </h3>
+          <div className="border border-border bg-card/10 backdrop-blur-sm rounded-[24px] overflow-hidden p-6 relative">
+            {/* Soft edge masking for smooth fade-in/fade-out of scrolling logos */}
+            <div className="absolute inset-y-0 left-0 w-20 md:w-32 bg-gradient-to-r from-background to-transparent z-20 pointer-events-none" />
+            <div className="absolute inset-y-0 right-0 w-20 md:w-32 bg-gradient-to-l from-background to-transparent z-20 pointer-events-none" />
+            
+            <div className="relative flex overflow-x-hidden w-full">
+              <div className="animate-marquee flex gap-0">
+                {[
+                  "VADILAL", "ANCHOR", "CREAMBELL", "INDIA DAIRY", "KHUSHBOO",
+                  "VADILAL", "ANCHOR", "CREAMBELL", "INDIA DAIRY", "KHUSHBOO"
+                ].map((name, i) => (
+                  <div key={i} className="flex-shrink-0 px-3">
+                    <div className="w-64 md:w-80 h-32 md:h-40 flex items-center justify-center rounded-[16px] bg-card border border-border text-primary font-display font-extrabold text-xl md:text-2xl tracking-widest shadow-sm hover:text-accent hover:border-accent/40 hover:shadow-glow-accent transition-all duration-300 select-none">
+                      {name}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* What We Do / Capabilities Section */}
-      <section className="py-24 md:py-32">
+      {/* What We Do / Bento Capabilities Section */}
+      <section className="py-28 md:py-36 relative z-10">
         <div className="max-w-7xl mx-auto px-6 md:px-12">
           
           <div className="text-center max-w-3xl mx-auto mb-20">
-            <h2 className="text-xs font-semibold uppercase tracking-widest text-accent mb-3">Capabilities</h2>
-            <h3 className="text-3xl sm:text-4xl font-display font-bold text-primary tracking-tight" id="capabilities-header">
+            <h2 className="text-xs font-bold uppercase tracking-widest text-accent mb-3">Capabilities</h2>
+            <h3 className="text-3xl sm:text-4xl font-display font-extrabold text-primary tracking-tight" id="capabilities-header">
               What We Do
             </h3>
-            <p className="text-base text-primary-muted mt-4 font-normal">
+            <p className="text-base text-primary-muted mt-4 font-normal max-w-2xl mx-auto">
               We bridge the divide between messy operational variables in the field and clean database records in the office.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {/* Bento Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {capabilities.map((cap, idx) => {
               const Icon = cap.icon;
               return (
                 <div 
                   key={idx}
-                  className="bg-card border border-border rounded-theme-md p-8 text-left transition-all hover:bg-card-hover hover:border-accent/30 group"
+                  className={`glass-panel p-8 rounded-[20px] flex flex-col justify-between relative group overflow-hidden text-left ${cap.className}`}
                 >
-                  <div className="h-12 w-12 bg-accent/5 rounded-theme-sm border border-accent/20 flex items-center justify-center text-accent mb-6 group-hover:scale-105 transition-transform">
-                    <Icon className="h-5 w-5" />
+                  {/* Hover visual accent */}
+                  <div className="absolute top-0 right-0 w-24 h-24 bg-accent/5 rounded-full blur-2xl group-hover:bg-accent/15 transition-all duration-300" />
+                  
+                  <div>
+                    <div className="flex items-center justify-between mb-8">
+                      <div className="h-12 w-12 bg-accent/5 rounded-[12px] border border-accent/20 flex items-center justify-center text-accent-light group-hover:scale-110 transition-transform duration-300">
+                        <Icon className="h-5 w-5" />
+                      </div>
+                      <span className="text-[10px] font-bold uppercase tracking-widest bg-card border border-border px-2.5 py-1 rounded-full text-accent-light">
+                        {cap.badge}
+                      </span>
+                    </div>
+                    
+                    <h4 className="text-xl font-bold font-display text-primary mb-3">{cap.title}</h4>
+                    <p className="text-sm text-primary-muted leading-relaxed max-w-xl">{cap.description}</p>
                   </div>
-                  <h4 className="text-lg font-bold font-display text-primary mb-3">{cap.title}</h4>
-                  <p className="text-sm text-primary-muted leading-relaxed">{cap.description}</p>
+                  
+                  <div className="h-4" />
                 </div>
               );
             })}
@@ -295,54 +331,52 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Quote Banner Section (Page 4 PDF) */}
-      <section className="py-20 bg-[#05070a] border-y border-border relative overflow-hidden">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-secondary/5 rounded-full blur-3xl pointer-events-none" />
+      {/* Quote Banner Section */}
+      <section className="py-24 bg-card/40 border-y border-border relative overflow-hidden z-10">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] h-[350px] bg-accent/5 rounded-full blur-[100px] pointer-events-none" />
         <div className="max-w-5xl mx-auto px-6 relative z-10">
           <div className="flex flex-col items-center gap-6">
-            <Quote className="h-10 w-10 text-secondary opacity-30 animate-pulse" />
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-display font-medium text-primary tracking-tight leading-relaxed max-w-4xl text-center italic text-primary/95">
-              &ldquo;Transforming how industries operate through digital intelligence.&rdquo;
+            <Quote className="h-10 w-10 text-accent opacity-40 animate-pulse" />
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-display font-medium text-primary tracking-tight leading-relaxed max-w-4xl text-center italic">
+              &ldquo;Transforming how industrial enterprises operate through deep-tech digital intelligence.&rdquo;
             </h2>
           </div>
         </div>
       </section>
 
       {/* Interactive Product Simulator Section */}
-      <section className="py-24 md:py-32 bg-[#05070A] border-b border-border">
+      <section className="py-28 md:py-36 bg-background border-b border-border relative z-10">
         <div className="max-w-7xl mx-auto px-6 md:px-12">
           
           <div className="text-center max-w-3xl mx-auto mb-16">
-            <span className="text-xs font-semibold uppercase tracking-widest text-accent mb-3">Our Products</span>
-            <h2 className="text-3xl sm:text-4xl font-display font-bold text-primary tracking-tight">
-              Scalable innovations built for tough operational environments.
+            <span className="text-xs font-bold uppercase tracking-widest text-accent mb-3">Our Platform</span>
+            <h2 className="text-3xl sm:text-4xl font-display font-extrabold text-primary tracking-tight">
+              Interactive ConTrack Console Modules.
             </h2>
-            <p className="text-base text-primary-muted mt-4 font-normal">
-              Toggle the core modules below to see how ConTrack captures data, verifies inputs, and compiles sheets in real-time.
+            <p className="text-base text-primary-muted mt-4 font-normal max-w-xl mx-auto">
+              Simulate the core features below to see how ConTrack captures data, parses tenders, and manages budgets.
             </p>
           </div>
 
           {/* Simulator Tabs */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-stretch">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
             
             {/* Tabs Selector list */}
-            <div className="lg:col-span-4 flex flex-row lg:flex-col overflow-x-auto lg:overflow-x-visible gap-3 pb-4 lg:pb-0 scrollbar-thin">
+            <div className="lg:col-span-4 flex flex-row lg:flex-col overflow-x-auto lg:overflow-x-visible gap-3 pb-4 lg:pb-0 scrollbar-none">
               {simulatorTabs.map((tab) => {
                 const isSelected = activeTab.id === tab.id;
                 return (
                   <button
                     key={tab.id}
                     onClick={() => setActiveTab(tab)}
-                    className={`text-left shrink-0 lg:shrink px-5 py-4 border rounded-theme-sm transition-all focus:outline-none flex items-center justify-between gap-3 ${
-                      isSelected 
-                        ? 'border-accent bg-accent/5 text-primary' 
-                        : 'border-border bg-card text-primary-muted hover:text-primary hover:border-border/80'
-                    }`}
+                    className={`text-left shrink-0 lg:shrink px-5 py-4.5 border rounded-[16px] transition-all duration-300 focus:outline-none flex items-center justify-between gap-3 ${isSelected
+                      ? 'border-accent bg-accent/10 text-accent-light shadow-md'
+                      : 'border-border bg-card text-primary-muted hover:text-primary hover:border-border/80'
+                      }`}
                   >
-                    <div className="text-sm font-semibold">{tab.name}</div>
-                    <span className={`text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded ${
-                      isSelected ? 'bg-accent/10 text-accent-light' : 'bg-white/5 text-primary-muted'
-                    }`}>
+                    <div className="text-sm font-bold">{tab.name}</div>
+                    <span className={`text-[9px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full ${isSelected ? 'bg-accent/20 text-accent-light' : 'bg-background border border-border text-primary-dim'
+                      }`}>
                       {tab.badge}
                     </span>
                   </button>
@@ -351,9 +385,9 @@ export default function Home() {
             </div>
 
             {/* Simulated Dashboard Frame */}
-            <div className="lg:col-span-8 bg-card border border-border rounded-theme-md p-6 lg:p-8 flex flex-col justify-between text-left">
+            <div className="lg:col-span-8 glass-panel p-6 lg:p-8 flex flex-col justify-between text-left rounded-[24px]">
               <div>
-                <h3 className="text-xl font-bold font-display text-primary flex items-center gap-3">
+                <h3 className="text-2xl font-bold font-display text-primary flex items-center gap-3">
                   {activeTab.title}
                 </h3>
                 <p className="text-sm text-primary-muted mt-2 leading-relaxed max-w-2xl">
@@ -362,42 +396,55 @@ export default function Home() {
               </div>
 
               {/* Tab Data Displays */}
-              <div className="mt-8 flex-grow border border-border/80 bg-[#06080d] rounded-theme-sm overflow-hidden flex flex-col min-h-[220px]">
-                <div className="bg-[#0b0e16] border-b border-border/60 px-4 py-2 text-[10px] uppercase font-mono text-primary-muted tracking-wider">
-                  Live Preview: {activeTab.name} Console
+              <div className="mt-8 flex-grow border border-border bg-card/40 rounded-[16px] overflow-hidden flex flex-col min-h-[260px] shadow-inner">
+                <div className="bg-background border-b border-border px-4 py-3 text-[10px] font-bold font-mono text-accent-light tracking-widest uppercase flex items-center gap-2">
+                  <span className="h-2 w-2 bg-accent rounded-full animate-ping" />
+                  Console Live System: {activeTab.name}
                 </div>
                 
-                <div className="p-5 flex-1 font-mono text-xs text-left">
+                <div className="p-5 flex-1 font-mono text-[11px] text-left">
                   {activeTab.id === 'dpr' && (
                     <div className="flex flex-col gap-4">
-                      <div className="text-[10px] text-accent-light border border-accent/20 bg-accent/5 px-2.5 py-1.5 rounded-sm inline-block max-w-fit">
-                        Sync Queue: 0 Pending Items (Site Online)
+                      <div className="text-[10px] text-emerald-500 border border-emerald-500/20 bg-emerald-500/5 px-3 py-1.5 rounded-full inline-block max-w-fit font-bold">
+                        Database Status: Active & Synced
                       </div>
+                      
+                      {/* Progress bar */}
+                      <div className="bg-background border border-border p-4 rounded-[12px] flex flex-col gap-2">
+                        <div className="flex justify-between text-primary font-bold">
+                          <span>Overall Project Completion</span>
+                          <span>{activeTab.data.progress}%</span>
+                        </div>
+                        <div className="h-2 bg-border rounded-full overflow-hidden">
+                          <div className="h-full bg-gradient-to-r from-accent to-accent-light" style={{ width: `${activeTab.data.progress}%` }} />
+                        </div>
+                      </div>
+
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                        <div className="bg-card border border-border/40 p-3 rounded-theme-sm">
-                          <span className="text-[9px] uppercase text-primary-muted block">Project Block</span>
-                          <span className="font-semibold text-primary">{activeTab.data.site}</span>
+                        <div className="bg-background border border-border p-3 rounded-[12px]">
+                          <span className="text-[9px] uppercase tracking-wider text-primary-dim block font-bold">Project Location</span>
+                          <span className="font-bold text-primary text-xs mt-0.5 block truncate">{activeTab.data.site}</span>
                         </div>
-                        <div className="bg-card border border-border/40 p-3 rounded-theme-sm">
-                          <span className="text-[9px] uppercase text-primary-muted block">Active Labor Summary</span>
-                          <span className="font-semibold text-primary">{activeTab.data.labor?.present} On Site ({activeTab.data.labor?.overtime} Overtime)</span>
+                        <div className="bg-background border border-border p-3 rounded-[12px]">
+                          <span className="text-[9px] uppercase tracking-wider text-primary-dim block font-bold">Active Attendance</span>
+                          <span className="font-bold text-primary text-xs mt-0.5 block">{activeTab.data.labor?.present} Men ({activeTab.data.labor?.overtime} OT)</span>
                         </div>
                       </div>
-                      <div className="bg-card border border-border/40 rounded-theme-sm overflow-hidden">
+                      <div className="bg-background border border-border rounded-[12px] overflow-hidden">
                         <table className="w-full text-left text-[11px]">
                           <thead>
-                            <tr className="border-b border-border/40 bg-white/5 text-primary-muted">
-                              <th className="p-2.5">Material log</th>
-                              <th className="p-2.5">Drop Qty</th>
-                              <th className="p-2.5 text-right">Status</th>
+                            <tr className="border-b border-border bg-background text-primary-dim font-bold">
+                              <th className="p-3">Material log</th>
+                              <th className="p-3">Drop Qty</th>
+                              <th className="p-3 text-right">Status</th>
                             </tr>
                           </thead>
                           <tbody>
                             {activeTab.data.materials?.map((m: any, i) => (
-                              <tr key={i} className="border-b border-border/20">
-                                <td className="p-2.5 text-primary">{m.item}</td>
-                                <td className="p-2.5 text-accent">{m.quantity}</td>
-                                <td className="p-2.5 text-right text-accent-light">{m.status}</td>
+                              <tr key={i} className="border-b border-border hover:bg-card-hover transition-colors">
+                                <td className="p-3 text-primary font-semibold">{m.item}</td>
+                                <td className="p-3 text-accent-light font-bold">{m.quantity}</td>
+                                <td className="p-3 text-right text-emerald-500 font-bold">{m.status}</td>
                               </tr>
                             ))}
                           </tbody>
@@ -408,29 +455,30 @@ export default function Home() {
 
                   {activeTab.id === 'scheduleb' && (
                     <div className="flex flex-col gap-4">
-                      <div className="flex items-center gap-2 text-[10px] text-primary-muted bg-white/5 border border-border/50 px-3 py-2 rounded-sm">
-                        <FileSpreadsheet className="h-4 w-4 text-accent" />
-                        Parsed File: {activeTab.data.fileName}
+                      <div className="flex items-center gap-2 text-[11px] text-primary bg-background border border-border px-3.5 py-2.5 rounded-[12px]">
+                        <FileSpreadsheet className="h-4 w-4 text-accent-light shrink-0" />
+                        <span className="font-bold">Extracted from PDF:</span>
+                        <span className="text-primary-dim">{activeTab.data.fileName}</span>
                       </div>
-                      <div className="bg-card border border-border/40 rounded-theme-sm overflow-x-auto">
+                      <div className="bg-background border border-border rounded-[12px] overflow-x-auto">
                         <table className="w-full text-left text-[11px] min-w-[500px]">
                           <thead>
-                            <tr className="border-b border-border/40 bg-white/5 text-primary-muted">
-                              <th className="p-2.5">Item</th>
-                              <th className="p-2.5">Description</th>
-                              <th className="p-2.5">Qty</th>
-                              <th className="p-2.5">Rate</th>
-                              <th className="p-2.5 text-right">Total</th>
+                            <tr className="border-b border-border bg-background text-primary-dim font-bold">
+                              <th className="p-3">Code</th>
+                              <th className="p-3">Item Description</th>
+                              <th className="p-3">Qty</th>
+                              <th className="p-3">Rate</th>
+                              <th className="p-3 text-right">Total</th>
                             </tr>
                           </thead>
                           <tbody>
                             {activeTab.data.extractedItems?.map((it: any, i) => (
-                              <tr key={i} className="border-b border-border/20">
-                                <td className="p-2.5 text-accent font-semibold">{it.itemCode}</td>
-                                <td className="p-2.5 text-primary truncate max-w-[200px]">{it.desc}</td>
-                                <td className="p-2.5 text-primary">{it.qty}</td>
-                                <td className="p-2.5 text-primary-muted">{it.rate}</td>
-                                <td className="p-2.5 text-right text-primary font-semibold">{it.total}</td>
+                              <tr key={i} className="border-b border-border hover:bg-card-hover">
+                                <td className="p-3 text-accent-light font-bold">{it.itemCode}</td>
+                                <td className="p-3 text-primary truncate max-w-[200px] font-medium">{it.desc}</td>
+                                <td className="p-3 text-primary font-medium">{it.qty}</td>
+                                <td className="p-3 text-primary-dim font-medium">{it.rate}</td>
+                                <td className="p-3 text-right text-accent-light font-bold">{it.total}</td>
                               </tr>
                             ))}
                           </tbody>
@@ -442,31 +490,30 @@ export default function Home() {
                   {activeTab.id === 'ledger' && (
                     <div className="flex flex-col gap-4">
                       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                        <div className="bg-card border border-border/40 p-3 rounded-theme-sm">
-                          <span className="text-[9px] uppercase text-primary-muted block">Project Budget</span>
-                          <span className="font-semibold text-primary">{activeTab.data.projectBudget}</span>
+                        <div className="bg-background border border-border p-3 rounded-[12px]">
+                          <span className="text-[9px] uppercase tracking-wider text-primary-dim block font-bold">Project Budget</span>
+                          <span className="font-bold text-primary text-xs mt-0.5 block">{activeTab.data.projectBudget}</span>
                         </div>
-                        <div className="bg-card border border-border/40 p-3 rounded-theme-sm">
-                          <span className="text-[9px] uppercase text-primary-muted block">Spent to Date</span>
-                          <span className="font-semibold text-primary">{activeTab.data.spentToDate}</span>
+                        <div className="bg-background border border-border p-3 rounded-[12px]">
+                          <span className="text-[9px] uppercase tracking-wider text-primary-dim block font-bold">Spent to Date</span>
+                          <span className="font-bold text-primary text-xs mt-0.5 block">{activeTab.data.spentToDate}</span>
                         </div>
-                        <div className="bg-card border border-accent/20 bg-accent/5 p-3 rounded-theme-sm">
-                          <span className="text-[9px] uppercase text-accent-light block font-bold">Leakage Blocked</span>
-                          <span className="font-semibold text-accent font-display">{activeTab.data.leakageBlocked}</span>
+                        <div className="bg-accent/5 border border-accent/20 p-3 rounded-[12px]">
+                          <span className="text-[9px] uppercase tracking-wider text-accent-light block font-bold">Leakage Prevented</span>
+                          <span className="font-bold text-emerald-500 text-xs mt-0.5 block font-display">{activeTab.data.leakageBlocked}</span>
                         </div>
                       </div>
-                      <div className="bg-card border border-border/40 rounded-theme-sm overflow-hidden">
-                        <div className="border-b border-border/40 bg-white/5 px-3 py-2 text-[10px] uppercase text-primary-muted">
-                          Recent Expense ledger transactions
+                      <div className="bg-background border border-border rounded-[12px] overflow-hidden">
+                        <div className="border-b border-border bg-background px-3.5 py-2.5 text-[10px] uppercase tracking-wider text-primary-dim font-bold">
+                          Expense ledger transactions
                         </div>
                         {activeTab.data.recentTransactions?.map((t: any, i) => (
-                          <div key={i} className="flex items-center justify-between p-2.5 border-b border-border/20 text-[11px] last:border-b-0">
-                            <span className="text-primary">{t.party}</span>
+                          <div key={i} className="flex items-center justify-between p-3 border-b border-border text-[11px] last:border-b-0">
+                            <span className="text-primary font-medium">{t.party}</span>
                             <div className="flex items-center gap-4">
-                              <span className="text-primary font-semibold">{t.amount}</span>
-                              <span className={`text-[9px] px-1.5 py-0.5 rounded ${
-                                t.status === 'Approved' ? 'bg-accent/10 text-accent-light' : 'bg-amber-500/10 text-amber-400'
-                              }`}>{t.status}</span>
+                              <span className="text-primary font-bold">{t.amount}</span>
+                              <span className={`text-[9px] font-bold px-2 py-0.5 rounded-full ${t.status === 'Approved' ? 'bg-emerald-500/10 text-emerald-500' : 'bg-amber-500/10 text-amber-500'
+                                }`}>{t.status}</span>
                             </div>
                           </div>
                         ))}
@@ -477,35 +524,34 @@ export default function Home() {
                   {activeTab.id === 'fleet' && (
                     <div className="flex flex-col gap-4">
                       <div className="grid grid-cols-2 gap-3">
-                        <div className="bg-card border border-border/40 p-3 rounded-theme-sm flex items-center justify-between">
+                        <div className="bg-background border border-border p-3.5 rounded-[12px] flex items-center justify-between">
                           <div>
-                            <span className="text-[9px] uppercase text-primary-muted block">Active Trucks</span>
-                            <span className="font-semibold text-primary">{activeTab.data.activeAssets} Vehicles</span>
+                            <span className="text-[9px] uppercase tracking-wider text-primary-dim block font-bold">Active Fleet</span>
+                            <span className="font-bold text-primary text-xs mt-0.5 block">{activeTab.data.activeAssets} Vehicles</span>
                           </div>
-                          <Truck className="h-5 w-5 text-accent opacity-55" />
+                          <Truck className="h-5 w-5 text-accent-light opacity-60" />
                         </div>
-                        <div className="bg-card border border-border/40 p-3 rounded-theme-sm flex items-center justify-between">
+                        <div className="bg-background border border-border p-3.5 rounded-[12px] flex items-center justify-between">
                           <div>
-                            <span className="text-[9px] uppercase text-primary-muted block">Assets Idle</span>
-                            <span className="font-semibold text-primary">{activeTab.data.idleAssets} Machinery</span>
+                            <span className="text-[9px] uppercase tracking-wider text-primary-dim block font-bold">Active Machinery</span>
+                            <span className="font-bold text-primary text-xs mt-0.5 block">{activeTab.data.idleAssets} Units</span>
                           </div>
-                          <Cpu className="h-5 w-5 text-amber-500 opacity-55" />
+                          <Database className="h-5 w-5 text-accent-light opacity-60" />
                         </div>
                       </div>
                       
                       <div className="flex flex-col gap-2">
-                        <span className="text-[10px] text-primary-muted uppercase tracking-wider block">Live Asset Alerts:</span>
+                        <span className="text-[10px] text-primary-dim uppercase tracking-widest font-bold block mb-1">Live Security Warnings:</span>
                         {activeTab.data.fuelAlerts?.map((a: any, i) => (
-                          <div key={i} className={`flex items-start gap-3 p-3 border rounded-theme-sm text-left ${
-                            a.severity === 'high' ? 'bg-red-500/5 border-red-500/20' : 'bg-amber-500/5 border-amber-500/20'
-                          }`}>
-                            <span className={`h-2 w-2 rounded-full mt-1.5 shrink-0 ${a.severity === 'high' ? 'bg-red-400' : 'bg-amber-400'}`} />
+                          <div key={i} className={`flex items-start gap-3.5 p-3.5 border rounded-[12px] text-left ${a.severity === 'high' ? 'bg-red-500/5 border-red-500/20' : 'bg-amber-500/5 border-amber-500/20'
+                            }`}>
+                            <span className={`h-2.5 w-2.5 rounded-full mt-1 shrink-0 ${a.severity === 'high' ? 'bg-red-500 animate-pulse' : 'bg-amber-500'}`} />
                             <div className="flex-1 text-[11px] text-left">
                               <div className="flex items-center justify-between">
-                                <span className="font-semibold text-primary">{a.asset}</span>
-                                <span className={`text-[8px] uppercase tracking-wider font-bold ${a.severity === 'high' ? 'text-red-400' : 'text-amber-400'}`}>{a.type}</span>
+                                <span className="font-bold text-primary">{a.asset}</span>
+                                <span className={`text-[8px] uppercase tracking-widest font-extrabold ${a.severity === 'high' ? 'text-red-400' : 'text-amber-400'}`}>{a.type}</span>
                               </div>
-                              <p className="text-primary-muted mt-0.5">{a.detail}</p>
+                              <p className="text-primary-muted mt-1 font-medium">{a.detail}</p>
                             </div>
                           </div>
                         ))}
@@ -520,29 +566,29 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Vision & Brand Core (Page 6 PDF) */}
-      <section className="py-24 md:py-32 relative overflow-hidden bg-[#05070a] border-b border-border">
+      {/* Vision & Brand Core */}
+      <section className="py-28 md:py-36 relative overflow-hidden bg-background border-b border-border z-10">
         {/* Glow ring */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-accent/5 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-accent/5 rounded-full blur-[100px] pointer-events-none" />
         
         <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10 text-center">
           <div className="max-w-3xl mx-auto flex flex-col items-center gap-6">
-            <span className="text-xs font-semibold uppercase tracking-widest text-secondary border border-secondary/20 bg-secondary/5 px-3.5 py-1.5 rounded-full">
+            <span className="text-xs font-bold uppercase tracking-widest text-accent-light border border-accent-light/20 bg-accent-light/5 px-4 py-2 rounded-full">
               Vision Statement
             </span>
-            <h2 className="text-3xl sm:text-4xl font-display font-bold text-primary tracking-tight mt-2">
+            <h2 className="text-3xl sm:text-4xl font-display font-extrabold text-primary tracking-tight">
               Our Vision
             </h2>
-            <p className="text-lg text-primary-muted leading-relaxed font-normal mt-2">
-              We aim to build a suite of intelligent digital tools that <strong className="text-primary font-semibold">transform how industries operate</strong>, starting with construction and expanding into multiple sectors worldwide.
+            <p className="text-lg text-primary-muted leading-relaxed font-normal mt-2 max-w-2xl">
+              We build intelligent, resilient software that <strong className="text-primary font-bold">completely digitizes heavy operational workflows</strong>, establishing full accountability and structural compliance.
             </p>
             
             {/* Branding anchors */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 w-full max-w-4xl mt-12 pt-12 border-t border-border/80">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 w-full max-w-4xl mt-12 pt-12 border-t border-border">
               {["AUTOMATE", "INTEGRATE", "SCALE", "PROTECT"].map((word, idx) => (
                 <div 
                   key={idx} 
-                  className="bg-card border border-border/60 py-5 rounded-theme-sm flex items-center justify-center font-display font-bold text-sm tracking-widest text-primary-muted hover:text-secondary hover:border-secondary/30 transition-colors"
+                  className="bg-card border border-border py-5 rounded-[12px] flex items-center justify-center font-display font-extrabold text-sm tracking-widest text-primary-muted hover:text-accent-light hover:border-accent-light/35 transition-all duration-300 shadow-sm"
                 >
                   {word}
                 </div>
@@ -552,45 +598,47 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Why Choose DZ Infotech Section */}
-      <section className="py-24 md:py-32">
+      {/* Why Choose DZ Infotech Section (Bento Grid Edge) */}
+      <section className="py-28 md:py-36 relative z-10">
         <div className="max-w-7xl mx-auto px-6 md:px-12">
           
           <div className="text-center max-w-3xl mx-auto mb-20">
-            <span className="text-xs font-semibold uppercase tracking-widest text-accent mb-3">Our Edge</span>
-            <h2 className="text-3xl sm:text-4xl font-display font-bold text-primary tracking-tight">
-              A Partnership Built on Field Validation
+            <span className="text-xs font-bold uppercase tracking-widest text-accent mb-3">Our Edge</span>
+            <h2 className="text-3xl sm:text-4xl font-display font-extrabold text-primary tracking-tight">
+              Engineered Through Field Experience.
             </h2>
-            <p className="text-base text-primary-muted mt-4 font-normal">
-              Most software companies write code from offices. We designed ConTrack by walking construction sites and observing daily leakages firsthand.
+            <p className="text-base text-primary-muted mt-4 font-normal max-w-2xl mx-auto">
+              We design software by standing on active work sites and analyzing transaction leaks firsthand.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             
             {/* Bento Edge 1 */}
-            <div className="bg-card border border-border p-8 rounded-theme-md text-left flex flex-col justify-between md:col-span-2">
+            <div className="glass-panel p-8 rounded-[20px] text-left flex flex-col justify-between md:col-span-2 relative group overflow-hidden">
+              <div className="absolute top-0 right-0 w-24 h-24 bg-accent/5 rounded-full blur-xl" />
               <div>
-                <div className="h-10 w-10 bg-accent/5 rounded-theme-sm border border-accent/20 flex items-center justify-center text-accent mb-6">
+                <div className="h-10 w-10 bg-accent/5 rounded-[12px] border border-accent/20 flex items-center justify-center text-accent-light mb-6">
                   <ShieldCheck className="h-5 w-5" />
                 </div>
-                <h4 className="text-lg font-bold font-display text-primary mb-3">Guaranteed Data Integrity</h4>
+                <h4 className="text-xl font-bold font-display text-primary mb-3">Guaranteed Data Integrity</h4>
                 <p className="text-sm text-primary-muted leading-relaxed max-w-xl">
-                  Our system verifies GPS coordinates and captures camera photos for attendance logs. We prevent fake time-clocking entries, verify material delivery slips, and automatically double-check structural dimensions to keep logs truthful.
+                  Our system verifies GPS tags and photo submissions to prevent fake time-clocking entries, logs structural test logs, and validates fuel slips mathematically.
                 </p>
               </div>
               <div className="h-4" />
             </div>
 
             {/* Bento Edge 2 */}
-            <div className="bg-card border border-border p-8 rounded-theme-md text-left flex flex-col justify-between">
+            <div className="glass-panel p-8 rounded-[20px] text-left flex flex-col justify-between relative group overflow-hidden">
+              <div className="absolute top-0 right-0 w-24 h-24 bg-accent/5 rounded-full blur-xl" />
               <div>
-                <div className="h-10 w-10 bg-accent/5 rounded-theme-sm border border-accent/20 flex items-center justify-center text-accent mb-6">
+                <div className="h-10 w-10 bg-accent/5 rounded-[12px] border border-accent/20 flex items-center justify-center text-accent-light mb-6">
                   <Landmark className="h-5 w-5" />
                 </div>
-                <h4 className="text-lg font-bold font-display text-primary mb-3">Localized Compliance</h4>
+                <h4 className="text-xl font-bold font-display text-primary mb-3">Localized Compliance</h4>
                 <p className="text-sm text-primary-muted leading-relaxed">
-                  Engineered specifically for national/state highway guidelines in India. Features direct Schedule-B layout mapping, tax structures, and regional vendor billing templates.
+                  Engineered specifically for national/state highway frameworks, direct Schedule-B layout mapping, and billing cycles.
                 </p>
               </div>
               <div className="h-4" />
@@ -601,34 +649,32 @@ export default function Home() {
       </section>
 
       {/* Process Timeline Section */}
-      <section className="py-24 md:py-32 bg-[#05070A] border-y border-border">
+      <section className="py-28 md:py-36 bg-card/40 border-y border-border relative z-10">
         <div className="max-w-7xl mx-auto px-6 md:px-12 text-center">
           
           <div className="max-w-3xl mx-auto mb-20">
-            <span className="text-xs font-semibold uppercase tracking-widest text-accent mb-3">Tactical Roadmap</span>
-            <h2 className="text-3xl sm:text-4xl font-display font-bold text-primary tracking-tight">
-              How We Digitize Your Operations
+            <span className="text-xs font-bold uppercase tracking-widest text-accent mb-3">Tactical Roadmap</span>
+            <h2 className="text-3xl sm:text-4xl font-display font-extrabold text-primary tracking-tight">
+              Structured Digital Deployment.
             </h2>
-            <p className="text-base text-primary-muted mt-4 font-normal">
-              We guide B2B clients through a controlled deployment timeline to ensure field crews adopt the software immediately.
+            <p className="text-base text-primary-muted mt-4 font-normal max-w-2xl mx-auto">
+              We guide B2B clients through a controlled deployment timeline to ensure field crew adoption immediately.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-10 text-left relative">
-            {/* Timeline connection lines */}
-            <div className="hidden md:block absolute top-12 left-1/4 right-1/4 h-[1px] bg-border z-0" />
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-left relative">
             
             {[
               { num: "01", step: "Operational Mapping", desc: "We review your active tenders, spreadsheets, and site reporting chains to isolate exact leakage sources and verify bottlenecks." },
               { num: "02", step: "Prototype Pilot", desc: "We deploy ConTrack to a single active pilot project site, onboarding your engineers and collecting direct field usage feedback." },
-              { num: "03", step: "Full Integration & Scale", desc: "Once validated, we roll out the application across all active projects, connect ledger APIs, and train administration teams." }
+              { num: "03", step: "Full Scale Rollout", desc: "Once validated, we roll out the application across all active projects, connect ledger APIs, and train administration teams." }
             ].map((p, idx) => (
-              <div key={idx} className="relative z-10 flex flex-col gap-5 bg-card border border-border/80 p-8 rounded-theme-md">
-                <div className="h-10 w-10 bg-accent/10 border border-accent text-accent font-display font-bold text-sm rounded-full flex items-center justify-center">
+              <div key={idx} className="relative z-10 flex flex-col gap-5 glass-panel p-8 rounded-[20px] hover:border-accent-light/30 transition-all duration-300">
+                <div className="h-10 w-10 bg-gradient-to-r from-accent to-accent-light text-white font-display font-extrabold text-sm rounded-full flex items-center justify-center shadow-lg">
                   {p.num}
                 </div>
                 <h4 className="text-lg font-bold font-display text-primary">{p.step}</h4>
-                <p className="text-xs sm:text-sm text-primary-muted leading-relaxed">{p.desc}</p>
+                <p className="text-sm text-primary-muted leading-relaxed">{p.desc}</p>
               </div>
             ))}
           </div>
@@ -636,31 +682,32 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Call To Action Block (Page 7 PDF) */}
-      <section className="py-24 md:py-32 relative">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-accent/5 rounded-full blur-3xl pointer-events-none" />
+      {/* Call To Action Block */}
+      <section className="py-28 md:py-36 relative z-10 overflow-hidden">
+        {/* Decorative glows */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] h-[350px] bg-accent/10 rounded-full blur-[100px] pointer-events-none" />
         
-        <div className="max-w-4xl mx-auto px-6 text-center">
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-display font-bold text-primary tracking-tight leading-tight">
+        <div className="max-w-4xl mx-auto px-6 text-center relative z-10">
+          <h2 className="text-4xl sm:text-5xl font-display font-extrabold text-primary tracking-tight leading-tight">
             Ready to Digitize Your Industry?
           </h2>
           <p className="text-base text-primary-muted mt-6 max-w-xl mx-auto leading-relaxed">
-            Join the growing list of businesses scaling with DZ Infotech intelligence. Partner with us to deploy ConTrack or build custom configurations.
+            Join the growing list of enterprises scaling with DZ Infotech intelligence. Partner with us to deploy ConTrack or build custom configurations.
           </p>
           <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link 
               to="/contact" 
-              className="flex items-center gap-2 text-sm font-semibold tracking-wide bg-accent text-white px-8 py-4 rounded-theme-sm border border-accent/20 transition-all hover:bg-accent-light hover:-translate-y-0.5 hover:shadow-glow-accent w-full sm:w-auto justify-center"
+              className="flex items-center gap-2 text-sm font-bold tracking-wide bg-gradient-to-r from-accent to-accent-light text-white px-8 py-4 rounded-full shadow-lg transition-all duration-300 hover:shadow-glow-accent hover:-translate-y-0.5 hover:brightness-110 w-full sm:w-auto justify-center"
             >
-              Schedule a Meeting
+              Partner With Us
               <ArrowRight className="h-4 w-4" />
             </Link>
             <Link 
               to="/product" 
-              className="text-sm font-semibold tracking-wide text-primary hover:text-secondary transition-colors flex items-center gap-1.5"
+              className="text-sm font-bold tracking-wide text-primary hover:text-accent-light transition-colors flex items-center gap-1.5 py-3"
             >
-              See ConTrack Pricing
-              <Play className="h-3 w-3 fill-current text-secondary" />
+              See ConTrack Details
+              <Play className="h-3.5 w-3.5 fill-current text-accent-light" />
             </Link>
           </div>
         </div>

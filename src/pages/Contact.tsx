@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Send, MapPin, Phone, Mail, Clock, Check } from 'lucide-react';
+import { Send, MapPin, Phone, Mail, Clock, Check, MessageSquare } from 'lucide-react';
 import CustomSelect from '../components/common/CustomSelect';
 import { useToast } from '../components/ui/Toast';
 
@@ -73,16 +73,20 @@ export default function Contact() {
   };
 
   return (
-    <div className="overflow-x-hidden">
+    <div className="overflow-x-hidden relative">
       
+      {/* Background Grid Accent */}
+      <div className="absolute top-0 inset-x-0 h-[600px] bg-grid-mesh [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] pointer-events-none" />
+
       {/* Contact Header */}
-      <section className="relative pt-12 pb-20 md:py-24">
-        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-accent/5 rounded-full blur-3xl pointer-events-none" />
-        <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10 text-center flex flex-col items-center">
-          <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase border border-accent/20 bg-accent/5 text-accent-light mb-6">
+      <section className="relative pt-20 pb-20 md:py-28">
+        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-accent/8 rounded-full blur-[120px] pointer-events-none" />
+        <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10 text-center flex flex-col items-center gap-5">
+          <span className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-bold tracking-widest uppercase border border-accent/20 bg-accent/5 text-accent-light backdrop-blur-sm">
+            <MessageSquare className="h-3.5 w-3.5" />
             Get in touch
           </span>
-          <h1 className="text-4xl sm:text-5xl font-display font-extrabold text-primary tracking-tight leading-[1.1] mb-6">
+          <h1 className="text-4xl sm:text-5xl font-display font-extrabold text-primary tracking-tight leading-[1.1]">
             Partner With Our Engineering Team
           </h1>
           <p className="text-base text-primary-muted leading-relaxed max-w-lg">
@@ -92,14 +96,14 @@ export default function Contact() {
       </section>
 
       {/* Grid: Form & Info */}
-      <section className="pb-24">
-        <div className="max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+      <section className="pb-28 relative z-10">
+        <div className="max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           
           {/* Info Card - Left */}
-          <div className="lg:col-span-5 flex flex-col gap-8 text-left bg-card border border-border p-8 rounded-theme-lg">
+          <div className="lg:col-span-5 flex flex-col gap-8 text-left glass-panel p-8 rounded-[24px]">
             <div>
-              <h3 className="text-lg font-bold font-display text-primary mb-2">Corporate Office</h3>
-              <p className="text-xs text-primary-muted leading-relaxed">
+              <h3 className="text-2xl font-bold font-display text-primary mb-2">Corporate Office</h3>
+              <p className="text-sm text-primary-muted leading-relaxed">
                 Reach out directly or coordinate a physical site visit to our development office.
               </p>
             </div>
@@ -108,12 +112,12 @@ export default function Contact() {
               
               {/* Address */}
               <div className="flex items-start gap-4">
-                <div className="h-9 w-9 bg-accent/5 border border-accent/20 rounded-theme-sm flex items-center justify-center text-accent shrink-0 mt-0.5">
-                  <MapPin className="h-4 w-4" />
+                <div className="h-10 w-10 bg-accent/5 border border-accent/20 rounded-[12px] flex items-center justify-center text-accent-light shrink-0 mt-0.5">
+                  <MapPin className="h-5 w-5" />
                 </div>
                 <div>
-                  <h4 className="font-semibold text-primary">Office Location</h4>
-                  <p className="text-xs leading-relaxed mt-1">
+                  <h4 className="font-bold text-primary text-base">Office Location</h4>
+                  <p className="text-sm leading-relaxed mt-1 text-primary-muted font-medium">
                     Plot No. 58, Vishwakarma Estate,<br />
                     Chitra G.I.D.C, Bhavnagar, Gujarat, India 364004
                   </p>
@@ -122,12 +126,12 @@ export default function Contact() {
 
               {/* Phones */}
               <div className="flex items-start gap-4">
-                <div className="h-9 w-9 bg-accent/5 border border-accent/20 rounded-theme-sm flex items-center justify-center text-accent shrink-0 mt-0.5">
-                  <Phone className="h-4 w-4" />
+                <div className="h-10 w-10 bg-accent/5 border border-accent/20 rounded-[12px] flex items-center justify-center text-accent-light shrink-0 mt-0.5">
+                  <Phone className="h-5 w-5" />
                 </div>
                 <div>
-                  <h4 className="font-semibold text-primary">Phone Lines</h4>
-                  <p className="text-xs leading-relaxed mt-1">
+                  <h4 className="font-bold text-primary text-base">Phone Lines</h4>
+                  <p className="text-sm leading-relaxed mt-1 text-primary-muted font-medium">
                     +91 94262 72081 (Sales)<br />
                     +91 98259 82727 (Technical)
                   </p>
@@ -136,12 +140,12 @@ export default function Contact() {
 
               {/* Emails */}
               <div className="flex items-start gap-4">
-                <div className="h-9 w-9 bg-accent/5 border border-accent/20 rounded-theme-sm flex items-center justify-center text-accent shrink-0 mt-0.5">
-                  <Mail className="h-4 w-4" />
+                <div className="h-10 w-10 bg-accent/5 border border-accent/20 rounded-[12px] flex items-center justify-center text-accent-light shrink-0 mt-0.5">
+                  <Mail className="h-5 w-5" />
                 </div>
                 <div>
-                  <h4 className="font-semibold text-primary">E-mail Correspondence</h4>
-                  <p className="text-xs leading-relaxed mt-1">
+                  <h4 className="font-bold text-primary text-base">E-mail Correspondence</h4>
+                  <p className="text-sm leading-relaxed mt-1 text-primary-muted font-medium">
                     sales@dzinfotech.in<br />
                     info@dzinfotech.in
                   </p>
@@ -150,12 +154,12 @@ export default function Contact() {
 
               {/* Hours */}
               <div className="flex items-start gap-4">
-                <div className="h-9 w-9 bg-accent/5 border border-accent/20 rounded-theme-sm flex items-center justify-center text-accent shrink-0 mt-0.5">
-                  <Clock className="h-4 w-4" />
+                <div className="h-10 w-10 bg-accent/5 border border-accent/20 rounded-[12px] flex items-center justify-center text-accent-light shrink-0 mt-0.5">
+                  <Clock className="h-5 w-5" />
                 </div>
                 <div>
-                  <h4 className="font-semibold text-primary">Working Hours</h4>
-                  <p className="text-xs leading-relaxed mt-1">
+                  <h4 className="font-bold text-primary text-base">Working Hours</h4>
+                  <p className="text-sm leading-relaxed mt-1 text-primary-muted font-medium font-sans">
                     Monday &ndash; Friday: 9:00 AM &ndash; 7:00 PM IST<br />
                     Saturday: 9:00 AM &ndash; 5:00 PM IST (Sunday Closed)
                   </p>
@@ -166,9 +170,11 @@ export default function Contact() {
           </div>
 
           {/* Form - Right */}
-          <div className="lg:col-span-7 bg-card border border-border p-8 md:p-12 rounded-theme-lg text-left relative">
-            <h2 className="text-xl font-bold font-display text-primary mb-2">Send Inquiry</h2>
-            <p className="text-xs text-primary-muted mb-8">
+          <div className="lg:col-span-7 glass-panel p-8 md:p-12 text-left rounded-[24px] relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-36 h-36 bg-accent/5 rounded-full blur-3xl pointer-events-none" />
+            
+            <h2 className="text-2xl font-bold font-display text-primary mb-2 relative z-10">Send Inquiry</h2>
+            <p className="text-sm text-primary-muted mb-8 relative z-10">
               Complete the intake wizard below. A sales engineer will respond within 12 hours.
             </p>
 
@@ -178,18 +184,18 @@ export default function Contact() {
                   initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.95 }}
-                  className="flex flex-col items-center justify-center py-16 text-center"
+                  className="flex flex-col items-center justify-center py-16 text-center relative z-10"
                 >
-                  <div className="h-16 w-16 bg-accent/10 border-2 border-accent rounded-full flex items-center justify-center text-accent mb-6 animate-pulse">
+                  <div className="h-16 w-16 bg-accent/10 border-2 border-accent rounded-full flex items-center justify-center text-accent-light mb-6 animate-pulse">
                     <Check className="h-8 w-8" />
                   </div>
-                  <h3 className="text-lg font-bold font-display text-primary">Inquiry Sent Successfully</h3>
+                  <h3 className="text-xl font-bold font-display text-primary">Inquiry Sent Successfully</h3>
                   <p className="text-sm text-primary-muted mt-2 max-w-sm">
                     Thank you for reaching out. We have logged your details and routed them to our technical planning team.
                   </p>
                   <button
                     onClick={() => setIsSuccess(false)}
-                    className="mt-6 text-xs font-bold uppercase tracking-wider border border-border text-primary hover:bg-card-hover px-5 py-2.5 rounded-theme-sm transition-colors"
+                    className="mt-6 text-xs font-bold uppercase tracking-widest border border-border hover:border-accent-light/40 text-primary hover:bg-card-hover px-6 py-3 rounded-full transition-all"
                   >
                     Send Another Message
                   </button>
@@ -197,11 +203,11 @@ export default function Contact() {
               ) : (
                 <motion.form 
                   onSubmit={handleSubmit}
-                  className="flex flex-col gap-6"
+                  className="flex flex-col gap-6 relative z-10"
                 >
                   {/* Name */}
                   <div className="flex flex-col gap-2">
-                    <label htmlFor="name" className="text-xs font-semibold uppercase tracking-wider text-primary-muted">Your Name</label>
+                    <label htmlFor="name" className="text-[10px] font-bold uppercase tracking-widest text-accent-light">Your Name</label>
                     <input 
                       type="text" 
                       id="name"
@@ -210,14 +216,14 @@ export default function Contact() {
                       onChange={handleInputChange}
                       required
                       placeholder="e.g. Bhupesh Kumar"
-                      className="bg-background border border-border focus:border-accent rounded-theme-sm px-4 py-3 text-sm text-primary placeholder:text-primary-muted/40 focus:outline-none transition-colors"
+                      className="bg-card border border-border focus:border-accent-light rounded-[12px] px-4 py-3 text-sm text-primary placeholder:text-primary-dim/40 focus:outline-none focus:ring-1 focus:ring-accent-light/20 transition-all shadow-inner"
                     />
                   </div>
 
                   {/* Contact info split */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     <div className="flex flex-col gap-2">
-                      <label htmlFor="email" className="text-xs font-semibold uppercase tracking-wider text-primary-muted">Corporate Email</label>
+                      <label htmlFor="email" className="text-[10px] font-bold uppercase tracking-widest text-accent-light">Corporate Email</label>
                       <input 
                         type="email" 
                         id="email"
@@ -226,11 +232,11 @@ export default function Contact() {
                         onChange={handleInputChange}
                         required
                         placeholder="bhupesh@contracts.com"
-                        className="bg-background border border-border focus:border-accent rounded-theme-sm px-4 py-3 text-sm text-primary placeholder:text-primary-muted/40 focus:outline-none transition-colors"
+                        className="bg-card border border-border focus:border-accent-light rounded-[12px] px-4 py-3 text-sm text-primary placeholder:text-primary-dim/40 focus:outline-none focus:ring-1 focus:ring-accent-light/20 transition-all shadow-inner"
                       />
                     </div>
                     <div className="flex flex-col gap-2">
-                      <label htmlFor="phone" className="text-xs font-semibold uppercase tracking-wider text-primary-muted">Contact Phone</label>
+                      <label htmlFor="phone" className="text-[10px] font-bold uppercase tracking-widest text-accent-light">Contact Phone</label>
                       <input 
                         type="tel" 
                         id="phone"
@@ -239,14 +245,14 @@ export default function Contact() {
                         onChange={handleInputChange}
                         required
                         placeholder="+91 94262 00000"
-                        className="bg-background border border-border focus:border-accent rounded-theme-sm px-4 py-3 text-sm text-primary placeholder:text-primary-muted/40 focus:outline-none transition-colors"
+                        className="bg-card border border-border focus:border-accent-light rounded-[12px] px-4 py-3 text-sm text-primary placeholder:text-primary-dim/40 focus:outline-none focus:ring-1 focus:ring-accent-light/20 transition-all shadow-inner"
                       />
                     </div>
                   </div>
 
                   {/* Company Name */}
                   <div className="flex flex-col gap-2">
-                    <label htmlFor="company" className="text-xs font-semibold uppercase tracking-wider text-primary-muted">Company Name</label>
+                    <label htmlFor="company" className="text-[10px] font-bold uppercase tracking-widest text-accent-light">Company Name</label>
                     <input 
                       type="text" 
                       id="company"
@@ -255,7 +261,7 @@ export default function Contact() {
                       onChange={handleInputChange}
                       required
                       placeholder="e.g. BK Road Infrastructure Developers"
-                      className="bg-background border border-border focus:border-accent rounded-theme-sm px-4 py-3 text-sm text-primary placeholder:text-primary-muted/40 focus:outline-none transition-colors"
+                      className="bg-card border border-border focus:border-accent-light rounded-[12px] px-4 py-3 text-sm text-primary placeholder:text-primary-dim/40 focus:outline-none focus:ring-1 focus:ring-accent-light/20 transition-all shadow-inner"
                     />
                   </div>
 
@@ -271,7 +277,7 @@ export default function Contact() {
 
                   {/* Message body */}
                   <div className="flex flex-col gap-2">
-                    <label htmlFor="message" className="text-xs font-semibold uppercase tracking-wider text-primary-muted">Inquiry Details & Site Count</label>
+                    <label htmlFor="message" className="text-[10px] font-bold uppercase tracking-widest text-accent-light">Inquiry Details & Site Count</label>
                     <textarea 
                       id="message"
                       name="message"
@@ -280,14 +286,14 @@ export default function Contact() {
                       onChange={handleInputChange}
                       required
                       placeholder="Include details about active site counts, estimated monthly billing volumes, or technical details..."
-                      className="bg-background border border-border focus:border-accent rounded-theme-sm px-4 py-3 text-sm text-primary placeholder:text-primary-muted/40 focus:outline-none transition-colors resize-none"
+                      className="bg-card border border-border focus:border-accent-light rounded-[12px] px-4 py-3 text-sm text-primary placeholder:text-primary-dim/40 focus:outline-none focus:ring-1 focus:ring-accent-light/20 transition-all shadow-inner resize-none"
                     />
                   </div>
 
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="flex items-center justify-center gap-2 mt-4 text-sm font-semibold tracking-wide bg-accent disabled:bg-accent/40 text-white py-4 rounded-theme-sm border border-accent/20 transition-all hover:bg-accent-light"
+                    className="flex items-center justify-center gap-2 mt-4 text-sm font-bold tracking-wide bg-gradient-to-r from-accent to-accent-light disabled:opacity-40 text-white py-4 rounded-full shadow-lg transition-all hover:shadow-glow-accent hover:brightness-110"
                   >
                     {isSubmitting ? (
                       <span className="h-5 w-5 border-2 border-white border-t-transparent rounded-full animate-spin" />

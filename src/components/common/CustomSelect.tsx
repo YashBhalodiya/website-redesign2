@@ -83,7 +83,7 @@ export default function CustomSelect({
                 <button
                   type="button"
                   onClick={() => handleSelect(opt.value)}
-                  className={`w-full px-4 py-3 text-left text-sm transition-colors hover:bg-white/5 ${
+                  className={`w-full px-4 py-3 text-left text-sm transition-colors hover:bg-card-hover ${
                     value === opt.value 
                       ? 'text-accent font-semibold bg-accent/5' 
                       : 'text-primary-muted'

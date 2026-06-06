@@ -47,8 +47,11 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-[#05070A] border-t border-border pt-20 pb-10">
-      <div className="max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-1 md:grid-cols-6 gap-12 mb-16">
+    <footer className="bg-card/45 border-t border-border pt-24 pb-12 relative overflow-hidden">
+      {/* Decorative Glow */}
+      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[150px] bg-accent/5 rounded-full blur-[100px] pointer-events-none" />
+
+      <div className="max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-1 md:grid-cols-6 gap-12 mb-20 relative z-10">
         
         {/* Brand Information */}
         <div className="md:col-span-2 flex flex-col gap-6">
@@ -56,24 +59,24 @@ export default function Footer() {
             <img 
               src="/DZInfotech_Logo_nobg.svg" 
               alt="DZ Infotech" 
-              className="h-10 w-auto"
+              className="h-14 w-auto"
             />
           </Link>
           <p className="text-primary-muted text-sm leading-relaxed max-w-sm">
             DZ Infotech is a visionary B2B software engineering firm. We design and build high-precision digital ecosystems that empower real-world industries with operational visibility, control, and efficiency.
           </p>
           <div className="flex items-center gap-4 text-primary-muted">
-            <a href="#" className="hover:text-accent transition-colors" aria-label="LinkedIn Profile"><LinkedinIcon className="h-4 w-4" /></a>
-            <a href="#" className="hover:text-accent transition-colors" aria-label="Twitter Profile"><TwitterIcon className="h-4 w-4" /></a>
-            <a href="#" className="hover:text-accent transition-colors" aria-label="GitHub Profile"><GithubIcon className="h-4 w-4" /></a>
-            <a href="mailto:info@dzinfotech.in" className="hover:text-accent transition-colors" aria-label="Email Contact"><Mail className="h-4 w-4" /></a>
+            <a href="#" className="hover:text-accent-light transition-colors p-2 bg-card-hover hover:bg-accent/15 rounded-full border border-border" aria-label="LinkedIn Profile"><LinkedinIcon className="h-4 w-4" /></a>
+            <a href="#" className="hover:text-accent-light transition-colors p-2 bg-card-hover hover:bg-accent/15 rounded-full border border-border" aria-label="Twitter Profile"><TwitterIcon className="h-4 w-4" /></a>
+            <a href="#" className="hover:text-accent-light transition-colors p-2 bg-card-hover hover:bg-accent/15 rounded-full border border-border" aria-label="GitHub Profile"><GithubIcon className="h-4 w-4" /></a>
+            <a href="mailto:info@dzinfotech.in" className="hover:text-accent-light transition-colors p-2 bg-card-hover hover:bg-accent/15 rounded-full border border-border" aria-label="Email Contact"><Mail className="h-4 w-4" /></a>
           </div>
         </div>
 
         {/* Dynamic Categories */}
         {Object.entries(footerCategories).map(([title, links]) => (
           <div key={title} className="flex flex-col gap-5">
-            <h3 className="text-xs font-semibold uppercase tracking-wider text-primary">{title}</h3>
+            <h3 className="text-xs font-bold uppercase tracking-widest text-primary">{title}</h3>
             <ul className="flex flex-col gap-3">
               {links.map((link) => (
                 <li key={link.name}>
@@ -90,7 +93,7 @@ export default function Footer() {
                       className="group text-sm text-primary-muted hover:text-primary transition-colors flex items-center gap-0.5"
                     >
                       {link.name}
-                      <ArrowUpRight className="h-3 w-3 opacity-0 -translate-y-0.5 translate-x-0.5 transition-all group-hover:opacity-100 group-hover:translate-y-0 group-hover:translate-x-0" />
+                      <ArrowUpRight className="h-3 w-3 opacity-0 -translate-y-0.5 translate-x-0.5 transition-all group-hover:opacity-100 group-hover:translate-y-0 group-hover:translate-x-0 text-accent-light" />
                     </Link>
                   )}
                 </li>
@@ -101,11 +104,11 @@ export default function Footer() {
       </div>
 
       {/* Footer Bottom Strip */}
-      <div className="max-w-7xl mx-auto px-6 md:px-12 border-t border-border/50 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
-        <p className="text-xs text-primary-muted">
+      <div className="max-w-7xl mx-auto px-6 md:px-12 border-t border-border pt-8 flex flex-col md:flex-row items-center justify-between gap-4 relative z-10">
+        <p className="text-xs text-primary-dim">
           &copy; {currentYear} DZ Infotech. All rights reserved.
         </p>
-        <p className="text-xs text-primary-muted/80">
+        <p className="text-xs text-primary-dim">
           Designed and engineered to premium B2B SaaS architecture standards.
         </p>
       </div>
