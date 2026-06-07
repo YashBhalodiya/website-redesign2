@@ -2,6 +2,8 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { CheckCircle, Download, Smartphone, Layers, Activity } from 'lucide-react';
 import { staggerContainer } from '../animations/variants';
+import ScrollReveal from '../components/ui/ScrollReveal';
+
 
 const detailedFeatures = [
   {
@@ -27,6 +29,14 @@ const detailedFeatures = [
 ];
 
 export default function Product() {
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    e.currentTarget.style.setProperty('--mouse-x', `${x}px`);
+    e.currentTarget.style.setProperty('--mouse-y', `${y}px`);
+  };
+
   return (
     <div className="overflow-x-hidden relative">
       
@@ -60,14 +70,14 @@ export default function Product() {
               <div className="flex flex-wrap items-center gap-4 pt-4">
                 <a 
                   href="#download" 
-                  className="flex items-center gap-2 text-sm font-bold tracking-wide bg-gradient-to-r from-accent to-accent-light text-white px-6 py-3.5 rounded-full shadow-lg transition-all duration-300 hover:shadow-glow-accent hover:-translate-y-0.5 hover:brightness-110"
+                  className="flex items-center gap-2 text-sm font-bold tracking-wide bg-gradient-to-r from-accent to-accent-light text-white px-6 py-3.5 rounded-full shadow-lg transition-all duration-300 hover:shadow-glow-accent hover:-translate-y-0.5 hover:brightness-110 cursor-pointer"
                 >
                   <Download className="h-4 w-4" />
                   Get ConTrack App
                 </a>
                 <Link 
                   to="/contact" 
-                  className="text-xs font-bold uppercase tracking-wider border border-border text-primary px-6 py-3.5 rounded-full transition-all duration-300 hover:bg-card-hover"
+                  className="text-xs font-bold uppercase tracking-wider border border-border text-primary px-6 py-3.5 rounded-full transition-all duration-300 hover:bg-card-hover cursor-pointer"
                 >
                   Schedule Demo
                 </Link>
@@ -75,8 +85,8 @@ export default function Product() {
             </motion.div>
 
             {/* Right Graphics (App Console Mockup) */}
-            <div className="lg:col-span-5 relative z-10">
-              <div className="glass-panel p-4 rounded-[24px] shadow-glow-accent relative overflow-hidden">
+            <ScrollReveal direction="left" className="lg:col-span-5 relative z-10">
+              <div className="spotlight-card p-4 rounded-[24px] shadow-glow-accent relative overflow-hidden" onMouseMove={handleMouseMove}>
                 <div className="absolute top-0 right-0 w-32 h-32 bg-accent-light/5 rounded-full blur-2xl pointer-events-none" />
                 
                 <div className="bg-[#020408] border border-white/5 rounded-[16px] p-5 flex flex-col gap-6">
@@ -113,7 +123,7 @@ export default function Product() {
                   </div>
                 </div>
               </div>
-            </div>
+            </ScrollReveal>
 
           </div>
         </div>
@@ -123,35 +133,44 @@ export default function Product() {
       <section className="py-24 bg-card/40 border-y border-border relative z-10">
         <div className="max-w-7xl mx-auto px-6 md:px-12">
           
-          <div className="text-center max-w-3xl mx-auto mb-20">
-            <span className="text-xs font-bold uppercase tracking-widest text-accent">Feature Breakdown</span>
-            <h2 className="text-3xl sm:text-4xl font-display font-extrabold text-primary mt-3">
-              Engineered for Hard Site Realities
-            </h2>
-          </div>
+          <ScrollReveal>
+            <div className="text-center max-w-3xl mx-auto mb-20">
+              <span className="text-xs font-bold uppercase tracking-widest text-accent">Feature Breakdown</span>
+              <h2 className="text-3xl sm:text-4xl font-display font-extrabold text-primary mt-3">
+                Engineered for Hard Site Realities
+              </h2>
+            </div>
+          </ScrollReveal>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {detailedFeatures.map((feat, idx) => (
-              <div 
-                key={idx}
-                className="glass-panel p-8 text-left flex flex-col justify-between rounded-[20px] relative group overflow-hidden"
-              >
-                <div className="absolute top-0 right-0 w-24 h-24 bg-accent/5 rounded-full blur-xl group-hover:bg-accent/10 transition-all duration-300" />
-                <div>
-                  <h3 className="text-xl font-bold font-display text-primary mb-3 relative z-10">{feat.title}</h3>
-                  <p className="text-sm text-primary-muted leading-relaxed mb-6 relative z-10">{feat.description}</p>
-                </div>
-                <ul className="flex flex-col gap-3 border-t border-border pt-6 text-xs text-primary-muted text-left relative z-10">
-                  {feat.bullets.map((b, i) => (
-                    <li key={i} className="flex items-center gap-2.5">
-                      <CheckCircle className="h-4 w-4 text-emerald-400 shrink-0" />
-                      <span className="font-semibold">{b}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
+          <ScrollReveal direction="none" staggerChildren={0.15}>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {detailedFeatures.map((feat, idx) => (
+                <motion.div 
+                  key={idx}
+                  variants={{
+                    hidden: { opacity: 0, y: 15 },
+                    visible: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 85, damping: 14 } }
+                  }}
+                  onMouseMove={handleMouseMove}
+                  className="spotlight-card p-8 text-left flex flex-col justify-between rounded-[20px] relative group overflow-hidden"
+                >
+                  <div className="absolute top-0 right-0 w-24 h-24 bg-accent/5 rounded-full blur-xl group-hover:bg-accent/10 transition-all duration-300" />
+                  <div className="relative z-10">
+                    <h3 className="text-xl font-bold font-display text-primary mb-3">{feat.title}</h3>
+                    <p className="text-sm text-primary-muted leading-relaxed mb-6">{feat.description}</p>
+                  </div>
+                  <ul className="flex flex-col gap-3 border-t border-border pt-6 text-xs text-primary-muted text-left relative z-10">
+                    {feat.bullets.map((b, i) => (
+                      <li key={i} className="flex items-center gap-2.5">
+                        <CheckCircle className="h-4 w-4 text-emerald-400 shrink-0" />
+                        <span className="font-semibold">{b}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </motion.div>
+              ))}
+            </div>
+          </ScrollReveal>
 
         </div>
       </section>
@@ -159,44 +178,46 @@ export default function Product() {
       {/* App Store Downloads Section */}
       <section className="py-28 relative z-10" id="download">
         <div className="max-w-7xl mx-auto px-6 md:px-12 text-center">
-          <div className="max-w-3xl mx-auto glass-panel p-10 md:p-16 rounded-[32px] relative overflow-hidden">
-            <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 w-64 h-64 bg-accent/5 rounded-full blur-3xl pointer-events-none" />
-            
-            <span className="text-xs font-bold uppercase tracking-widest text-accent mb-3 block">Deployment</span>
-            <h2 className="text-3xl sm:text-4xl font-display font-extrabold text-primary tracking-tight">
-              Deploy ConTrack Today
-            </h2>
-            <p className="text-sm text-primary-muted mt-4 max-w-xl mx-auto leading-relaxed">
-              Contact our sales engineering team to set up your corporate admin portal. Once set up, your site engineers can download the app to get started.
-            </p>
-            
-            <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
-              <a 
-                href="#" 
-                className="flex items-center justify-center gap-3.5 bg-card border border-border hover:border-accent-light/40 hover:bg-card-hover text-primary px-6 py-3.5 rounded-full transition-all w-full sm:w-auto"
-              >
-                <Smartphone className="h-5 w-5 text-accent-light" />
-                <div className="text-left font-sans">
-                  <span className="text-[9px] uppercase text-primary-dim block leading-none font-bold">Get app on</span>
-                  <span className="text-sm font-bold">Google Play Store</span>
-                </div>
-              </a>
-              <a 
-                href="#" 
-                className="flex items-center justify-center gap-3.5 bg-card border border-border hover:border-accent-light/40 hover:bg-card-hover text-primary px-6 py-3.5 rounded-full transition-all w-full sm:w-auto"
-              >
-                <Smartphone className="h-5 w-5 text-accent-light" />
-                <div className="text-left font-sans">
-                  <span className="text-[9px] uppercase text-primary-dim block leading-none font-bold">Download on</span>
-                  <span className="text-sm font-bold">Apple App Store</span>
-                </div>
-              </a>
+          <ScrollReveal>
+            <div className="max-w-3xl mx-auto spotlight-card p-10 md:p-16 rounded-[32px] relative overflow-hidden" onMouseMove={handleMouseMove}>
+              <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 w-64 h-64 bg-accent/5 rounded-full blur-3xl pointer-events-none" />
+              
+              <span className="text-xs font-bold uppercase tracking-widest text-accent mb-3 block">Deployment</span>
+              <h2 className="text-3xl sm:text-4xl font-display font-extrabold text-primary tracking-tight">
+                Deploy ConTrack Today
+              </h2>
+              <p className="text-sm text-primary-muted mt-4 max-w-xl mx-auto leading-relaxed">
+                Contact our sales engineering team to set up your corporate admin portal. Once set up, your site engineers can download the app to get started.
+              </p>
+              
+              <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4 relative z-10">
+                <a 
+                  href="#" 
+                  className="flex items-center justify-center gap-3.5 bg-card border border-border hover:border-accent-light/40 hover:bg-card-hover text-primary px-6 py-3.5 rounded-full transition-all w-full sm:w-auto cursor-pointer"
+                >
+                  <Smartphone className="h-5 w-5 text-accent-light" />
+                  <div className="text-left font-sans">
+                    <span className="text-[9px] uppercase text-primary-dim block leading-none font-bold">Get app on</span>
+                    <span className="text-sm font-bold">Google Play Store</span>
+                  </div>
+                </a>
+                <a 
+                  href="#" 
+                  className="flex items-center justify-center gap-3.5 bg-card border border-border hover:border-accent-light/40 hover:bg-card-hover text-primary px-6 py-3.5 rounded-full transition-all w-full sm:w-auto cursor-pointer"
+                >
+                  <Smartphone className="h-5 w-5 text-accent-light" />
+                  <div className="text-left font-sans">
+                    <span className="text-[9px] uppercase text-primary-dim block leading-none font-bold">Download on</span>
+                    <span className="text-sm font-bold">Apple App Store</span>
+                  </div>
+                </a>
+              </div>
+              
+              <div className="mt-8 text-xs text-primary-dim italic font-medium relative z-10">
+                *App access requires active company credentials provided by DZ Infotech.
+              </div>
             </div>
-            
-            <div className="mt-8 text-xs text-primary-dim italic font-medium">
-              *App access requires active company credentials provided by DZ Infotech.
-            </div>
-          </div>
+          </ScrollReveal>
         </div>
       </section>
 

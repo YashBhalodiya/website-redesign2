@@ -1,12 +1,14 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Cpu, Smartphone, Zap, Bot, ArrowRight, Play, 
   Landmark, ShieldCheck, FileSpreadsheet, Truck, Quote,
   Activity, Database
 } from 'lucide-react';
 import { fadeInUp, staggerContainer } from '../animations/variants';
+import ScrollReveal from '../components/ui/ScrollReveal';
+
 
 const capabilities = [
   {
@@ -106,8 +108,110 @@ const simulatorTabs = [
   }
 ];
 
+function TerminalLog({ tabId }: { tabId: string }) {
+  const [logs, setLogs] = useState<string[]>([]);
+
+  useEffect(() => {
+    const initialLogs: Record<string, string[]> = {
+      dpr: [
+        "[SYS] ConTrack offline core initialized.",
+        "[SYS] Sync queue listener: active (wifi/cellular).",
+        "[SYS] Waiting for local field logs..."
+      ],
+      scheduleb: [
+        "[SYS] Parser Engine ready (OCR + NLP parsing layers).",
+        "[SYS] Waiting for PDF document drop..."
+      ],
+      ledger: [
+        "[SYS] Financial API link: connected to ledger databases.",
+        "[SYS] Fraud detection engine: scanning transaction streams...",
+        "[SYS] Active budget monitor: OK."
+      ],
+      fleet: [
+        "[SYS] GPS and fuel sensor network: connected (14 assets).",
+        "[SYS] Telemetry streams: listening on websocket...",
+        "[SYS] Idle alert limit: set to 30 mins."
+      ]
+    };
+
+    setLogs(initialLogs[tabId] || []);
+
+    const intervalMessages: Record<string, string[]> = {
+      dpr: [
+        "Site engineer submitted DPR log: 250 Bags Cement.",
+        "Labor log: 48 workers checked-in via GPS card.",
+        "Database sync completed: Site NH-48-PKG3 updated.",
+        "QC checked Diesel fuel drop (Asset-14): 450 Litres approved.",
+        "Offline cache cleared. System standby."
+      ],
+      scheduleb: [
+        "PDF upload detected: NHAI_RoadProject_ScheduleB.pdf.",
+        "OCR layer scanned 48 pages in 1.4s.",
+        "Parsed Item 2.14: Earthwork excavation. Qty: 45,000 Cum.",
+        "Parsed Item 4.02: Wet Mix Macadam. Rate ₹1,420 matched.",
+        "Exporter generated: CSV structured list ready."
+      ],
+      ledger: [
+        "Somnath Cement Agency invoice parsed: ₹4,20,000. Matching...",
+        "Match index 100%: Invoice matches drop log cement. Status: Approved.",
+        "Flagged double fuel slip for Asset-09. Prevented leak: ₹14,50,000.",
+        "Bharat Petroleum invoice reconciled: ₹1,85,000.",
+        "Syncing ERP database. Budget usage computed: 65.2%."
+      ],
+      fleet: [
+        "GPS: Excavator CAT-320 verified at lat: 21.7601, lng: 72.1501.",
+        "WARN: Excavator CAT-320 fuel drop detected! 40L drop in 10 mins. Alarm sent.",
+        "GPS: Dumper Truck TR-09 speed alert: 45km/h inside zone.",
+        "WARN: Dumper Truck TR-09 idling limit exceeded (45 mins). Engine shutoff requested.",
+        "SYS: Maintenance schedule check: 3 assets require service."
+      ]
+    };
+
+    const interval = setInterval(() => {
+      const msgs = intervalMessages[tabId];
+      if (msgs && msgs.length > 0) {
+        const randomMsg = msgs[Math.floor(Math.random() * msgs.length)];
+        const time = new Date().toLocaleTimeString();
+        setLogs(prev => [...prev.slice(-3), `[${time}] ${randomMsg}`]);
+      }
+    }, 2800);
+
+    return () => clearInterval(interval);
+  }, [tabId]);
+
+  return (
+    <div className="bg-black/90 border border-white/5 rounded-[12px] p-3.5 font-mono text-[10px] text-emerald-400/90 text-left h-[105px] overflow-hidden flex flex-col gap-1.5 shadow-inner mt-4">
+      <div className="text-[9px] uppercase text-emerald-500/50 font-bold border-b border-emerald-500/10 pb-1.5 mb-1 flex items-center justify-between">
+        <span>Console Output Stream</span>
+        <span className="h-1.5 w-1.5 bg-emerald-400 rounded-full animate-ping" />
+      </div>
+      <div className="flex-1 flex flex-col gap-1 overflow-hidden">
+        {logs.map((log, i) => (
+          <motion.div
+            key={log + i}
+            initial={{ opacity: 0, y: 5 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.25 }}
+            className="truncate"
+          >
+            {log}
+          </motion.div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export default function Home() {
   const [activeTab, setActiveTab] = useState(simulatorTabs[0]);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    e.currentTarget.style.setProperty('--mouse-x', `${x}px`);
+    e.currentTarget.style.setProperty('--mouse-y', `${y}px`);
+  };
 
   return (
     <div className="overflow-x-hidden relative">
@@ -286,47 +390,56 @@ export default function Home() {
       <section className="py-28 md:py-36 relative z-10">
         <div className="max-w-7xl mx-auto px-6 md:px-12">
           
-          <div className="text-center max-w-3xl mx-auto mb-20">
-            <h2 className="text-xs font-bold uppercase tracking-widest text-accent mb-3">Capabilities</h2>
-            <h3 className="text-3xl sm:text-4xl font-display font-extrabold text-primary tracking-tight" id="capabilities-header">
-              What We Do
-            </h3>
-            <p className="text-base text-primary-muted mt-4 font-normal max-w-2xl mx-auto">
-              We bridge the divide between messy operational variables in the field and clean database records in the office.
-            </p>
-          </div>
+          <ScrollReveal delay={0.1}>
+            <div className="text-center max-w-3xl mx-auto mb-20">
+              <h2 className="text-xs font-bold uppercase tracking-widest text-accent mb-3">Capabilities</h2>
+              <h3 className="text-3xl sm:text-4xl font-display font-extrabold text-primary tracking-tight" id="capabilities-header">
+                What We Do
+              </h3>
+              <p className="text-base text-primary-muted mt-4 font-normal max-w-2xl mx-auto">
+                We bridge the divide between messy operational variables in the field and clean database records in the office.
+              </p>
+            </div>
+          </ScrollReveal>
 
           {/* Bento Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {capabilities.map((cap, idx) => {
-              const Icon = cap.icon;
-              return (
-                <div 
-                  key={idx}
-                  className={`glass-panel p-8 rounded-[20px] flex flex-col justify-between relative group overflow-hidden text-left ${cap.className}`}
-                >
-                  {/* Hover visual accent */}
-                  <div className="absolute top-0 right-0 w-24 h-24 bg-accent/5 rounded-full blur-2xl group-hover:bg-accent/15 transition-all duration-300" />
-                  
-                  <div>
-                    <div className="flex items-center justify-between mb-8">
-                      <div className="h-12 w-12 bg-accent/5 rounded-[12px] border border-accent/20 flex items-center justify-center text-accent-light group-hover:scale-110 transition-transform duration-300">
-                        <Icon className="h-5 w-5" />
+          <ScrollReveal direction="none" staggerChildren={0.15}>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {capabilities.map((cap, idx) => {
+                const Icon = cap.icon;
+                return (
+                  <motion.div 
+                    key={idx}
+                    variants={{
+                      hidden: { opacity: 0, y: 20 },
+                      visible: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 80, damping: 15 } }
+                    }}
+                    onMouseMove={handleMouseMove}
+                    className={`spotlight-card p-8 rounded-[20px] flex flex-col justify-between relative group overflow-hidden text-left ${cap.className}`}
+                  >
+                    {/* Hover visual accent */}
+                    <div className="absolute top-0 right-0 w-24 h-24 bg-accent/5 rounded-full blur-2xl group-hover:bg-accent/15 transition-all duration-300" />
+                    
+                    <div className="relative z-10">
+                      <div className="flex items-center justify-between mb-8">
+                        <div className="h-12 w-12 bg-accent/5 rounded-[12px] border border-accent/20 flex items-center justify-center text-accent-light group-hover:scale-110 transition-transform duration-300">
+                          <Icon className="h-5 w-5" />
+                        </div>
+                        <span className="text-[10px] font-bold uppercase tracking-widest bg-card border border-border px-2.5 py-1 rounded-full text-accent-light">
+                          {cap.badge}
+                        </span>
                       </div>
-                      <span className="text-[10px] font-bold uppercase tracking-widest bg-card border border-border px-2.5 py-1 rounded-full text-accent-light">
-                        {cap.badge}
-                      </span>
+                      
+                      <h4 className="text-xl font-bold font-display text-primary mb-3">{cap.title}</h4>
+                      <p className="text-sm text-primary-muted leading-relaxed max-w-xl">{cap.description}</p>
                     </div>
                     
-                    <h4 className="text-xl font-bold font-display text-primary mb-3">{cap.title}</h4>
-                    <p className="text-sm text-primary-muted leading-relaxed max-w-xl">{cap.description}</p>
-                  </div>
-                  
-                  <div className="h-4" />
-                </div>
-              );
-            })}
-          </div>
+                    <div className="h-4" />
+                  </motion.div>
+                );
+              })}
+            </div>
+          </ScrollReveal>
 
         </div>
       </section>
@@ -348,15 +461,17 @@ export default function Home() {
       <section className="py-28 md:py-36 bg-background border-b border-border relative z-10">
         <div className="max-w-7xl mx-auto px-6 md:px-12">
           
-          <div className="text-center max-w-3xl mx-auto mb-16">
-            <span className="text-xs font-bold uppercase tracking-widest text-accent mb-3">Our Platform</span>
-            <h2 className="text-3xl sm:text-4xl font-display font-extrabold text-primary tracking-tight">
-              Interactive ConTrack Console Modules.
-            </h2>
-            <p className="text-base text-primary-muted mt-4 font-normal max-w-xl mx-auto">
-              Simulate the core features below to see how ConTrack captures data, parses tenders, and manages budgets.
-            </p>
-          </div>
+          <ScrollReveal>
+            <div className="text-center max-w-3xl mx-auto mb-16">
+              <span className="text-xs font-bold uppercase tracking-widest text-accent mb-3">Our Platform</span>
+              <h2 className="text-3xl sm:text-4xl font-display font-extrabold text-primary tracking-tight">
+                Interactive ConTrack Console Modules.
+              </h2>
+              <p className="text-base text-primary-muted mt-4 font-normal max-w-xl mx-auto">
+                Simulate the core features below to see how ConTrack captures data, parses tenders, and manages budgets.
+              </p>
+            </div>
+          </ScrollReveal>
 
           {/* Simulator Tabs */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
@@ -369,7 +484,7 @@ export default function Home() {
                   <button
                     key={tab.id}
                     onClick={() => setActiveTab(tab)}
-                    className={`text-left shrink-0 lg:shrink px-5 py-4.5 border rounded-[16px] transition-all duration-300 focus:outline-none flex items-center justify-between gap-3 ${isSelected
+                    className={`text-left shrink-0 lg:shrink px-5 py-4.5 border rounded-[16px] transition-all duration-300 focus:outline-none flex items-center justify-between gap-3 cursor-pointer ${isSelected
                       ? 'border-accent bg-accent/10 text-accent-light shadow-md'
                       : 'border-border bg-card text-primary-muted hover:text-primary hover:border-border/80'
                       }`}
@@ -385,182 +500,203 @@ export default function Home() {
             </div>
 
             {/* Simulated Dashboard Frame */}
-            <div className="lg:col-span-8 glass-panel p-6 lg:p-8 flex flex-col justify-between text-left rounded-[24px]">
-              <div>
-                <h3 className="text-2xl font-bold font-display text-primary flex items-center gap-3">
-                  {activeTab.title}
-                </h3>
-                <p className="text-sm text-primary-muted mt-2 leading-relaxed max-w-2xl">
-                  {activeTab.description}
-                </p>
-              </div>
-
-              {/* Tab Data Displays */}
-              <div className="mt-8 flex-grow border border-border bg-card/40 rounded-[16px] overflow-hidden flex flex-col min-h-[260px] shadow-inner">
-                <div className="bg-background border-b border-border px-4 py-3 text-[10px] font-bold font-mono text-accent-light tracking-widest uppercase flex items-center gap-2">
-                  <span className="h-2 w-2 bg-accent rounded-full animate-ping" />
-                  Console Live System: {activeTab.name}
+            <ScrollReveal direction="left" className="lg:col-span-8 flex">
+              <div className="w-full spotlight-card p-6 lg:p-8 flex flex-col justify-between text-left rounded-[24px]" onMouseMove={handleMouseMove}>
+                <div>
+                  <h3 className="text-2xl font-bold font-display text-primary flex items-center gap-3">
+                    {activeTab.title}
+                  </h3>
+                  <p className="text-sm text-primary-muted mt-2 leading-relaxed max-w-2xl">
+                    {activeTab.description}
+                  </p>
                 </div>
-                
-                <div className="p-5 flex-1 font-mono text-[11px] text-left">
-                  {activeTab.id === 'dpr' && (
-                    <div className="flex flex-col gap-4">
-                      <div className="text-[10px] text-emerald-500 border border-emerald-500/20 bg-emerald-500/5 px-3 py-1.5 rounded-full inline-block max-w-fit font-bold">
-                        Database Status: Active & Synced
-                      </div>
-                      
-                      {/* Progress bar */}
-                      <div className="bg-background border border-border p-4 rounded-[12px] flex flex-col gap-2">
-                        <div className="flex justify-between text-primary font-bold">
-                          <span>Overall Project Completion</span>
-                          <span>{activeTab.data.progress}%</span>
-                        </div>
-                        <div className="h-2 bg-border rounded-full overflow-hidden">
-                          <div className="h-full bg-gradient-to-r from-accent to-accent-light" style={{ width: `${activeTab.data.progress}%` }} />
-                        </div>
-                      </div>
 
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                        <div className="bg-background border border-border p-3 rounded-[12px]">
-                          <span className="text-[9px] uppercase tracking-wider text-primary-dim block font-bold">Project Location</span>
-                          <span className="font-bold text-primary text-xs mt-0.5 block truncate">{activeTab.data.site}</span>
-                        </div>
-                        <div className="bg-background border border-border p-3 rounded-[12px]">
-                          <span className="text-[9px] uppercase tracking-wider text-primary-dim block font-bold">Active Attendance</span>
-                          <span className="font-bold text-primary text-xs mt-0.5 block">{activeTab.data.labor?.present} Men ({activeTab.data.labor?.overtime} OT)</span>
-                        </div>
-                      </div>
-                      <div className="bg-background border border-border rounded-[12px] overflow-hidden">
-                        <table className="w-full text-left text-[11px]">
-                          <thead>
-                            <tr className="border-b border-border bg-background text-primary-dim font-bold">
-                              <th className="p-3">Material log</th>
-                              <th className="p-3">Drop Qty</th>
-                              <th className="p-3 text-right">Status</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {activeTab.data.materials?.map((m: any, i) => (
-                              <tr key={i} className="border-b border-border hover:bg-card-hover transition-colors">
-                                <td className="p-3 text-primary font-semibold">{m.item}</td>
-                                <td className="p-3 text-accent-light font-bold">{m.quantity}</td>
-                                <td className="p-3 text-right text-emerald-500 font-bold">{m.status}</td>
-                              </tr>
-                            ))}
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
-                  )}
-
-                  {activeTab.id === 'scheduleb' && (
-                    <div className="flex flex-col gap-4">
-                      <div className="flex items-center gap-2 text-[11px] text-primary bg-background border border-border px-3.5 py-2.5 rounded-[12px]">
-                        <FileSpreadsheet className="h-4 w-4 text-accent-light shrink-0" />
-                        <span className="font-bold">Extracted from PDF:</span>
-                        <span className="text-primary-dim">{activeTab.data.fileName}</span>
-                      </div>
-                      <div className="bg-background border border-border rounded-[12px] overflow-x-auto">
-                        <table className="w-full text-left text-[11px] min-w-[500px]">
-                          <thead>
-                            <tr className="border-b border-border bg-background text-primary-dim font-bold">
-                              <th className="p-3">Code</th>
-                              <th className="p-3">Item Description</th>
-                              <th className="p-3">Qty</th>
-                              <th className="p-3">Rate</th>
-                              <th className="p-3 text-right">Total</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {activeTab.data.extractedItems?.map((it: any, i) => (
-                              <tr key={i} className="border-b border-border hover:bg-card-hover">
-                                <td className="p-3 text-accent-light font-bold">{it.itemCode}</td>
-                                <td className="p-3 text-primary truncate max-w-[200px] font-medium">{it.desc}</td>
-                                <td className="p-3 text-primary font-medium">{it.qty}</td>
-                                <td className="p-3 text-primary-dim font-medium">{it.rate}</td>
-                                <td className="p-3 text-right text-accent-light font-bold">{it.total}</td>
-                              </tr>
-                            ))}
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
-                  )}
-
-                  {activeTab.id === 'ledger' && (
-                    <div className="flex flex-col gap-4">
-                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                        <div className="bg-background border border-border p-3 rounded-[12px]">
-                          <span className="text-[9px] uppercase tracking-wider text-primary-dim block font-bold">Project Budget</span>
-                          <span className="font-bold text-primary text-xs mt-0.5 block">{activeTab.data.projectBudget}</span>
-                        </div>
-                        <div className="bg-background border border-border p-3 rounded-[12px]">
-                          <span className="text-[9px] uppercase tracking-wider text-primary-dim block font-bold">Spent to Date</span>
-                          <span className="font-bold text-primary text-xs mt-0.5 block">{activeTab.data.spentToDate}</span>
-                        </div>
-                        <div className="bg-accent/5 border border-accent/20 p-3 rounded-[12px]">
-                          <span className="text-[9px] uppercase tracking-wider text-accent-light block font-bold">Leakage Prevented</span>
-                          <span className="font-bold text-emerald-500 text-xs mt-0.5 block font-display">{activeTab.data.leakageBlocked}</span>
-                        </div>
-                      </div>
-                      <div className="bg-background border border-border rounded-[12px] overflow-hidden">
-                        <div className="border-b border-border bg-background px-3.5 py-2.5 text-[10px] uppercase tracking-wider text-primary-dim font-bold">
-                          Expense ledger transactions
-                        </div>
-                        {activeTab.data.recentTransactions?.map((t: any, i) => (
-                          <div key={i} className="flex items-center justify-between p-3 border-b border-border text-[11px] last:border-b-0">
-                            <span className="text-primary font-medium">{t.party}</span>
-                            <div className="flex items-center gap-4">
-                              <span className="text-primary font-bold">{t.amount}</span>
-                              <span className={`text-[9px] font-bold px-2 py-0.5 rounded-full ${t.status === 'Approved' ? 'bg-emerald-500/10 text-emerald-500' : 'bg-amber-500/10 text-amber-500'
-                                }`}>{t.status}</span>
+                {/* Tab Data Displays */}
+                <div className="mt-8 flex-grow border border-border bg-card/40 rounded-[16px] overflow-hidden flex flex-col min-h-[260px] shadow-inner relative z-10">
+                  <div className="bg-background border-b border-border px-4 py-3 text-[10px] font-bold font-mono text-accent-light tracking-widest uppercase flex items-center gap-2">
+                    <span className="h-2 w-2 bg-accent rounded-full animate-ping" />
+                    Console Live System: {activeTab.name}
+                  </div>
+                  
+                  <div className="p-5 flex-1 flex flex-col justify-between font-mono text-[11px] text-left">
+                    <AnimatePresence mode="wait">
+                      <motion.div
+                        key={activeTab.id}
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -10 }}
+                        transition={{ duration: 0.3, ease: "easeInOut" }}
+                        className="flex-grow flex flex-col justify-between"
+                      >
+                        {activeTab.id === 'dpr' && (
+                          <div className="flex flex-col gap-4">
+                            <div className="text-[10px] text-emerald-500 border border-emerald-500/20 bg-emerald-500/5 px-3 py-1.5 rounded-full inline-block max-w-fit font-bold">
+                              Database Status: Active & Synced
                             </div>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-
-                  {activeTab.id === 'fleet' && (
-                    <div className="flex flex-col gap-4">
-                      <div className="grid grid-cols-2 gap-3">
-                        <div className="bg-background border border-border p-3.5 rounded-[12px] flex items-center justify-between">
-                          <div>
-                            <span className="text-[9px] uppercase tracking-wider text-primary-dim block font-bold">Active Fleet</span>
-                            <span className="font-bold text-primary text-xs mt-0.5 block">{activeTab.data.activeAssets} Vehicles</span>
-                          </div>
-                          <Truck className="h-5 w-5 text-accent-light opacity-60" />
-                        </div>
-                        <div className="bg-background border border-border p-3.5 rounded-[12px] flex items-center justify-between">
-                          <div>
-                            <span className="text-[9px] uppercase tracking-wider text-primary-dim block font-bold">Active Machinery</span>
-                            <span className="font-bold text-primary text-xs mt-0.5 block">{activeTab.data.idleAssets} Units</span>
-                          </div>
-                          <Database className="h-5 w-5 text-accent-light opacity-60" />
-                        </div>
-                      </div>
-                      
-                      <div className="flex flex-col gap-2">
-                        <span className="text-[10px] text-primary-dim uppercase tracking-widest font-bold block mb-1">Live Security Warnings:</span>
-                        {activeTab.data.fuelAlerts?.map((a: any, i) => (
-                          <div key={i} className={`flex items-start gap-3.5 p-3.5 border rounded-[12px] text-left ${a.severity === 'high' ? 'bg-red-500/5 border-red-500/20' : 'bg-amber-500/5 border-amber-500/20'
-                            }`}>
-                            <span className={`h-2.5 w-2.5 rounded-full mt-1 shrink-0 ${a.severity === 'high' ? 'bg-red-500 animate-pulse' : 'bg-amber-500'}`} />
-                            <div className="flex-1 text-[11px] text-left">
-                              <div className="flex items-center justify-between">
-                                <span className="font-bold text-primary">{a.asset}</span>
-                                <span className={`text-[8px] uppercase tracking-widest font-extrabold ${a.severity === 'high' ? 'text-red-400' : 'text-amber-400'}`}>{a.type}</span>
+                            
+                            {/* Progress bar */}
+                            <div className="bg-background border border-border p-4 rounded-[12px] flex flex-col gap-2">
+                              <div className="flex justify-between text-primary font-bold">
+                                <span>Overall Project Completion</span>
+                                <span>{activeTab.data.progress}%</span>
                               </div>
-                              <p className="text-primary-muted mt-1 font-medium">{a.detail}</p>
+                              <div className="h-2 bg-border rounded-full overflow-hidden">
+                                <motion.div 
+                                  initial={{ width: 0 }}
+                                  animate={{ width: `${activeTab.data.progress}%` }}
+                                  transition={{ duration: 0.8, ease: "easeOut" }}
+                                  className="h-full bg-gradient-to-r from-accent to-accent-light" 
+                                />
+                              </div>
+                            </div>
+
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                              <div className="bg-background border border-border p-3 rounded-[12px]">
+                                <span className="text-[9px] uppercase tracking-wider text-primary-dim block font-bold">Project Location</span>
+                                <span className="font-bold text-primary text-xs mt-0.5 block truncate">{activeTab.data.site}</span>
+                              </div>
+                              <div className="bg-background border border-border p-3 rounded-[12px]">
+                                <span className="text-[9px] uppercase tracking-wider text-primary-dim block font-bold">Active Attendance</span>
+                                <span className="font-bold text-primary text-xs mt-0.5 block">{activeTab.data.labor?.present} Men ({activeTab.data.labor?.overtime} OT)</span>
+                              </div>
+                            </div>
+                            <div className="bg-background border border-border rounded-[12px] overflow-hidden">
+                              <table className="w-full text-left text-[11px]">
+                                <thead>
+                                  <tr className="border-b border-border bg-background text-primary-dim font-bold">
+                                    <th className="p-3">Material log</th>
+                                    <th className="p-3">Drop Qty</th>
+                                    <th className="p-3 text-right">Status</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  {activeTab.data.materials?.map((m: any, i) => (
+                                    <tr key={i} className="border-b border-border hover:bg-card-hover transition-colors">
+                                      <td className="p-3 text-primary font-semibold">{m.item}</td>
+                                      <td className="p-3 text-accent-light font-bold">{m.quantity}</td>
+                                      <td className="p-3 text-right text-emerald-500 font-bold">{m.status}</td>
+                                    </tr>
+                                  ))}
+                                </tbody>
+                              </table>
                             </div>
                           </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
+                        )}
+
+                        {activeTab.id === 'scheduleb' && (
+                          <div className="flex flex-col gap-4">
+                            <div className="flex items-center gap-2 text-[11px] text-primary bg-background border border-border px-3.5 py-2.5 rounded-[12px]">
+                              <FileSpreadsheet className="h-4 w-4 text-accent-light shrink-0" />
+                              <span className="font-bold">Extracted from PDF:</span>
+                              <span className="text-primary-dim">{activeTab.data.fileName}</span>
+                            </div>
+                            <div className="bg-background border border-border rounded-[12px] overflow-x-auto">
+                              <table className="w-full text-left text-[11px] min-w-[500px]">
+                                <thead>
+                                  <tr className="border-b border-border bg-background text-primary-dim font-bold">
+                                    <th className="p-3">Code</th>
+                                    <th className="p-3">Item Description</th>
+                                    <th className="p-3">Qty</th>
+                                    <th className="p-3">Rate</th>
+                                    <th className="p-3 text-right">Total</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  {activeTab.data.extractedItems?.map((it: any, i) => (
+                                    <tr key={i} className="border-b border-border hover:bg-card-hover">
+                                      <td className="p-3 text-accent-light font-bold">{it.itemCode}</td>
+                                      <td className="p-3 text-primary truncate max-w-[200px] font-medium">{it.desc}</td>
+                                      <td className="p-3 text-primary font-medium">{it.qty}</td>
+                                      <td className="p-3 text-primary-dim font-medium">{it.rate}</td>
+                                      <td className="p-3 text-right text-accent-light font-bold">{it.total}</td>
+                                    </tr>
+                                  ))}
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                        )}
+
+                        {activeTab.id === 'ledger' && (
+                          <div className="flex flex-col gap-4">
+                            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                              <div className="bg-background border border-border p-3 rounded-[12px]">
+                                <span className="text-[9px] uppercase tracking-wider text-primary-dim block font-bold">Project Budget</span>
+                                <span className="font-bold text-primary text-xs mt-0.5 block">{activeTab.data.projectBudget}</span>
+                              </div>
+                              <div className="bg-background border border-border p-3 rounded-[12px]">
+                                <span className="text-[9px] uppercase tracking-wider text-primary-dim block font-bold">Spent to Date</span>
+                                <span className="font-bold text-primary text-xs mt-0.5 block">{activeTab.data.spentToDate}</span>
+                              </div>
+                              <div className="bg-accent/5 border border-accent/20 p-3 rounded-[12px]">
+                                <span className="text-[9px] uppercase tracking-wider text-accent-light block font-bold">Leakage Prevented</span>
+                                <span className="font-bold text-emerald-500 text-xs mt-0.5 block font-display">{activeTab.data.leakageBlocked}</span>
+                              </div>
+                            </div>
+                            <div className="bg-background border border-border rounded-[12px] overflow-hidden">
+                              <div className="border-b border-border bg-background px-3.5 py-2.5 text-[10px] uppercase tracking-wider text-primary-dim font-bold">
+                                Expense ledger transactions
+                              </div>
+                              {activeTab.data.recentTransactions?.map((t: any, i) => (
+                                <div key={i} className="flex items-center justify-between p-3 border-b border-border text-[11px] last:border-b-0">
+                                  <span className="text-primary font-medium">{t.party}</span>
+                                  <div className="flex items-center gap-4">
+                                    <span className="text-primary font-bold">{t.amount}</span>
+                                    <span className={`text-[9px] font-bold px-2 py-0.5 rounded-full ${t.status === 'Approved' ? 'bg-emerald-500/10 text-emerald-500' : 'bg-amber-500/10 text-amber-500'
+                                      }`}>{t.status}</span>
+                                  </div>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+
+                        {activeTab.id === 'fleet' && (
+                          <div className="flex flex-col gap-4">
+                            <div className="grid grid-cols-2 gap-3">
+                              <div className="bg-background border border-border p-3.5 rounded-[12px] flex items-center justify-between">
+                                <div>
+                                  <span className="text-[9px] uppercase tracking-wider text-primary-dim block font-bold">Active Fleet</span>
+                                  <span className="font-bold text-primary text-xs mt-0.5 block">{activeTab.data.activeAssets} Vehicles</span>
+                                </div>
+                                <Truck className="h-5 w-5 text-accent-light opacity-60" />
+                              </div>
+                              <div className="bg-background border border-border p-3.5 rounded-[12px] flex items-center justify-between">
+                                <div>
+                                  <span className="text-[9px] uppercase tracking-wider text-primary-dim block font-bold">Active Machinery</span>
+                                  <span className="font-bold text-primary text-xs mt-0.5 block">{activeTab.data.idleAssets} Units</span>
+                                </div>
+                                <Database className="h-5 w-5 text-accent-light opacity-60" />
+                              </div>
+                            </div>
+                            
+                            <div className="flex flex-col gap-2">
+                              <span className="text-[10px] text-primary-dim uppercase tracking-widest font-bold block mb-1">Live Security Warnings:</span>
+                              {activeTab.data.fuelAlerts?.map((a: any, i) => (
+                                <div key={i} className={`flex items-start gap-3.5 p-3.5 border rounded-[12px] text-left ${a.severity === 'high' ? 'bg-red-500/5 border-red-500/20' : 'bg-amber-500/5 border-amber-500/20'
+                                  }`}>
+                                  <span className={`h-2.5 w-2.5 rounded-full mt-1 shrink-0 ${a.severity === 'high' ? 'bg-red-500 animate-pulse' : 'bg-amber-500'}`} />
+                                  <div className="flex-1 text-[11px] text-left">
+                                    <div className="flex items-center justify-between">
+                                      <span className="font-bold text-primary">{a.asset}</span>
+                                      <span className={`text-[8px] uppercase tracking-widest font-extrabold ${a.severity === 'high' ? 'text-red-400' : 'text-amber-400'}`}>{a.type}</span>
+                                    </div>
+                                    <p className="text-primary-muted mt-1 font-medium">{a.detail}</p>
+                                  </div>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+                      </motion.div>
+                    </AnimatePresence>
+
+                    {/* LIVE STREAMING TERMINAL MODULE */}
+                    <TerminalLog tabId={activeTab.id} />
+                  </div>
                 </div>
               </div>
-            </div>
+            </ScrollReveal>
 
           </div>
         </div>
@@ -602,49 +738,67 @@ export default function Home() {
       <section className="py-28 md:py-36 relative z-10">
         <div className="max-w-7xl mx-auto px-6 md:px-12">
           
-          <div className="text-center max-w-3xl mx-auto mb-20">
-            <span className="text-xs font-bold uppercase tracking-widest text-accent mb-3">Our Edge</span>
-            <h2 className="text-3xl sm:text-4xl font-display font-extrabold text-primary tracking-tight">
-              Engineered Through Field Experience.
-            </h2>
-            <p className="text-base text-primary-muted mt-4 font-normal max-w-2xl mx-auto">
-              We design software by standing on active work sites and analyzing transaction leaks firsthand.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            
-            {/* Bento Edge 1 */}
-            <div className="glass-panel p-8 rounded-[20px] text-left flex flex-col justify-between md:col-span-2 relative group overflow-hidden">
-              <div className="absolute top-0 right-0 w-24 h-24 bg-accent/5 rounded-full blur-xl" />
-              <div>
-                <div className="h-10 w-10 bg-accent/5 rounded-[12px] border border-accent/20 flex items-center justify-center text-accent-light mb-6">
-                  <ShieldCheck className="h-5 w-5" />
-                </div>
-                <h4 className="text-xl font-bold font-display text-primary mb-3">Guaranteed Data Integrity</h4>
-                <p className="text-sm text-primary-muted leading-relaxed max-w-xl">
-                  Our system verifies GPS tags and photo submissions to prevent fake time-clocking entries, logs structural test logs, and validates fuel slips mathematically.
-                </p>
-              </div>
-              <div className="h-4" />
+          <ScrollReveal>
+            <div className="text-center max-w-3xl mx-auto mb-20">
+              <span className="text-xs font-bold uppercase tracking-widest text-accent mb-3">Our Edge</span>
+              <h2 className="text-3xl sm:text-4xl font-display font-extrabold text-primary tracking-tight">
+                Engineered Through Field Experience.
+              </h2>
+              <p className="text-base text-primary-muted mt-4 font-normal max-w-2xl mx-auto">
+                We design software by standing on active work sites and analyzing transaction leaks firsthand.
+              </p>
             </div>
+          </ScrollReveal>
 
-            {/* Bento Edge 2 */}
-            <div className="glass-panel p-8 rounded-[20px] text-left flex flex-col justify-between relative group overflow-hidden">
-              <div className="absolute top-0 right-0 w-24 h-24 bg-accent/5 rounded-full blur-xl" />
-              <div>
-                <div className="h-10 w-10 bg-accent/5 rounded-[12px] border border-accent/20 flex items-center justify-center text-accent-light mb-6">
-                  <Landmark className="h-5 w-5" />
+          <ScrollReveal direction="none" staggerChildren={0.15}>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              
+              {/* Bento Edge 1 */}
+              <motion.div 
+                variants={{
+                  hidden: { opacity: 0, y: 20 },
+                  visible: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 80, damping: 15 } }
+                }}
+                onMouseMove={handleMouseMove}
+                className="spotlight-card p-8 rounded-[20px] text-left flex flex-col justify-between md:col-span-2 relative group overflow-hidden"
+              >
+                <div className="absolute top-0 right-0 w-24 h-24 bg-accent/5 rounded-full blur-xl" />
+                <div className="relative z-10">
+                  <div className="h-10 w-10 bg-accent/5 rounded-[12px] border border-accent/20 flex items-center justify-center text-accent-light mb-6">
+                    <ShieldCheck className="h-5 w-5" />
+                  </div>
+                  <h4 className="text-xl font-bold font-display text-primary mb-3">Guaranteed Data Integrity</h4>
+                  <p className="text-sm text-primary-muted leading-relaxed max-w-xl">
+                    Our system verifies GPS tags and photo submissions to prevent fake time-clocking entries, logs structural test logs, and validates fuel slips mathematically.
+                  </p>
                 </div>
-                <h4 className="text-xl font-bold font-display text-primary mb-3">Localized Compliance</h4>
-                <p className="text-sm text-primary-muted leading-relaxed">
-                  Engineered specifically for national/state highway frameworks, direct Schedule-B layout mapping, and billing cycles.
-                </p>
-              </div>
-              <div className="h-4" />
-            </div>
+                <div className="h-4" />
+              </motion.div>
 
-          </div>
+              {/* Bento Edge 2 */}
+              <motion.div 
+                variants={{
+                  hidden: { opacity: 0, y: 20 },
+                  visible: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 80, damping: 15 } }
+                }}
+                onMouseMove={handleMouseMove}
+                className="spotlight-card p-8 rounded-[20px] text-left flex flex-col justify-between relative group overflow-hidden"
+              >
+                <div className="absolute top-0 right-0 w-24 h-24 bg-accent/5 rounded-full blur-xl" />
+                <div className="relative z-10">
+                  <div className="h-10 w-10 bg-accent/5 rounded-[12px] border border-accent/20 flex items-center justify-center text-accent-light mb-6">
+                    <Landmark className="h-5 w-5" />
+                  </div>
+                  <h4 className="text-xl font-bold font-display text-primary mb-3">Localized Compliance</h4>
+                  <p className="text-sm text-primary-muted leading-relaxed">
+                    Engineered specifically for national/state highway frameworks, direct Schedule-B layout mapping, and billing cycles.
+                  </p>
+                </div>
+                <div className="h-4" />
+              </motion.div>
+
+            </div>
+          </ScrollReveal>
         </div>
       </section>
 
@@ -652,32 +806,44 @@ export default function Home() {
       <section className="py-28 md:py-36 bg-card/40 border-y border-border relative z-10">
         <div className="max-w-7xl mx-auto px-6 md:px-12 text-center">
           
-          <div className="max-w-3xl mx-auto mb-20">
-            <span className="text-xs font-bold uppercase tracking-widest text-accent mb-3">Tactical Roadmap</span>
-            <h2 className="text-3xl sm:text-4xl font-display font-extrabold text-primary tracking-tight">
-              Structured Digital Deployment.
-            </h2>
-            <p className="text-base text-primary-muted mt-4 font-normal max-w-2xl mx-auto">
-              We guide B2B clients through a controlled deployment timeline to ensure field crew adoption immediately.
-            </p>
-          </div>
+          <ScrollReveal>
+            <div className="max-w-3xl mx-auto mb-20">
+              <span className="text-xs font-bold uppercase tracking-widest text-accent mb-3">Tactical Roadmap</span>
+              <h2 className="text-3xl sm:text-4xl font-display font-extrabold text-primary tracking-tight">
+                Structured Digital Deployment.
+              </h2>
+              <p className="text-base text-primary-muted mt-4 font-normal max-w-2xl mx-auto">
+                We guide B2B clients through a controlled deployment timeline to ensure field crew adoption immediately.
+              </p>
+            </div>
+          </ScrollReveal>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-left relative">
-            
-            {[
-              { num: "01", step: "Operational Mapping", desc: "We review your active tenders, spreadsheets, and site reporting chains to isolate exact leakage sources and verify bottlenecks." },
-              { num: "02", step: "Prototype Pilot", desc: "We deploy ConTrack to a single active pilot project site, onboarding your engineers and collecting direct field usage feedback." },
-              { num: "03", step: "Full Scale Rollout", desc: "Once validated, we roll out the application across all active projects, connect ledger APIs, and train administration teams." }
-            ].map((p, idx) => (
-              <div key={idx} className="relative z-10 flex flex-col gap-5 glass-panel p-8 rounded-[20px] hover:border-accent-light/30 transition-all duration-300">
-                <div className="h-10 w-10 bg-gradient-to-r from-accent to-accent-light text-white font-display font-extrabold text-sm rounded-full flex items-center justify-center shadow-lg">
-                  {p.num}
-                </div>
-                <h4 className="text-lg font-bold font-display text-primary">{p.step}</h4>
-                <p className="text-sm text-primary-muted leading-relaxed">{p.desc}</p>
-              </div>
-            ))}
-          </div>
+          <ScrollReveal direction="none" staggerChildren={0.2}>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-left relative">
+              
+              {[
+                { num: "01", step: "Operational Mapping", desc: "We review your active tenders, spreadsheets, and site reporting chains to isolate exact leakage sources and verify bottlenecks." },
+                { num: "02", step: "Prototype Pilot", desc: "We deploy ConTrack to a single active pilot project site, onboarding your engineers and collecting direct field usage feedback." },
+                { num: "03", step: "Full Scale Rollout", desc: "Once validated, we roll out the application across all active projects, connect ledger APIs, and train administration teams." }
+              ].map((p, idx) => (
+                <motion.div 
+                  key={idx} 
+                  variants={{
+                    hidden: { opacity: 0, scale: 0.95, y: 15 },
+                    visible: { opacity: 1, scale: 1, y: 0, transition: { type: "spring", stiffness: 85, damping: 14 } }
+                  }}
+                  onMouseMove={handleMouseMove}
+                  className="relative z-10 flex flex-col gap-5 spotlight-card p-8 rounded-[20px]"
+                >
+                  <div className="h-10 w-10 bg-gradient-to-r from-accent to-accent-light text-white font-display font-extrabold text-sm rounded-full flex items-center justify-center shadow-lg">
+                    {p.num}
+                  </div>
+                  <h4 className="text-lg font-bold font-display text-primary">{p.step}</h4>
+                  <p className="text-sm text-primary-muted leading-relaxed">{p.desc}</p>
+                </motion.div>
+              ))}
+            </div>
+          </ScrollReveal>
 
         </div>
       </section>
@@ -687,30 +853,32 @@ export default function Home() {
         {/* Decorative glows */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] h-[350px] bg-accent/10 rounded-full blur-[100px] pointer-events-none" />
         
-        <div className="max-w-4xl mx-auto px-6 text-center relative z-10">
-          <h2 className="text-4xl sm:text-5xl font-display font-extrabold text-primary tracking-tight leading-tight">
-            Ready to Digitize Your Industry?
-          </h2>
-          <p className="text-base text-primary-muted mt-6 max-w-xl mx-auto leading-relaxed">
-            Join the growing list of enterprises scaling with DZ Infotech intelligence. Partner with us to deploy ConTrack or build custom configurations.
-          </p>
-          <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link 
-              to="/contact" 
-              className="flex items-center gap-2 text-sm font-bold tracking-wide bg-gradient-to-r from-accent to-accent-light text-white px-8 py-4 rounded-full shadow-lg transition-all duration-300 hover:shadow-glow-accent hover:-translate-y-0.5 hover:brightness-110 w-full sm:w-auto justify-center"
-            >
-              Partner With Us
-              <ArrowRight className="h-4 w-4" />
-            </Link>
-            <Link 
-              to="/product" 
-              className="text-sm font-bold tracking-wide text-primary hover:text-accent-light transition-colors flex items-center gap-1.5 py-3"
-            >
-              See ConTrack Details
-              <Play className="h-3.5 w-3.5 fill-current text-accent-light" />
-            </Link>
+        <ScrollReveal duration={0.8} direction="up">
+          <div className="max-w-4xl mx-auto px-6 text-center relative z-10">
+            <h2 className="text-4xl sm:text-5xl font-display font-extrabold text-primary tracking-tight leading-tight">
+              Ready to Digitize Your Industry?
+            </h2>
+            <p className="text-base text-primary-muted mt-6 max-w-xl mx-auto leading-relaxed">
+              Join the growing list of enterprises scaling with DZ Infotech intelligence. Partner with us to deploy ConTrack or build custom configurations.
+            </p>
+            <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+              <Link 
+                to="/contact" 
+                className="flex items-center gap-2 text-sm font-bold tracking-wide bg-gradient-to-r from-accent to-accent-light text-white px-8 py-4 rounded-full shadow-lg transition-all duration-300 hover:shadow-glow-accent hover:-translate-y-0.5 hover:brightness-110 w-full sm:w-auto justify-center cursor-pointer"
+              >
+                Partner With Us
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+              <Link 
+                to="/product" 
+                className="text-sm font-bold tracking-wide text-primary hover:text-accent-light transition-colors flex items-center gap-1.5 py-3 cursor-pointer"
+              >
+                See ConTrack Details
+                <Play className="h-3.5 w-3.5 fill-current text-accent-light" />
+              </Link>
+            </div>
           </div>
-        </div>
+        </ScrollReveal>
       </section>
 
     </div>
