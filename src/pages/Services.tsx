@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Terminal, Layers, ArrowRight, CheckCircle, Smartphone, Cpu } from 'lucide-react';
 import ScrollReveal from '../components/ui/ScrollReveal';
+import smartIndustry from '../assets/smart_industry.png';
 
 
 const coreServices = [
@@ -118,6 +119,48 @@ export default function Services() {
             </div>
           </ScrollReveal>
 
+        </div>
+      </section>
+
+      {/* Industrial Operations Center Visual Break */}
+      <section className="py-24 bg-background border-b border-border relative z-10 overflow-hidden">
+        <div className="max-w-7xl mx-auto px-6 md:px-12">
+          <div className="spotlight-card rounded-[32px] p-8 md:p-12 relative overflow-hidden" onMouseMove={handleMouseMove}>
+            <div className="absolute top-0 right-0 w-64 h-64 bg-accent/5 rounded-full blur-3xl pointer-events-none" />
+            
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+              <ScrollReveal className="text-left flex flex-col gap-6 relative z-10">
+                <span className="text-xs font-bold uppercase tracking-widest text-accent-light">Systems Architecture</span>
+                <h2 className="text-3xl sm:text-4xl font-display font-extrabold text-primary tracking-tight">
+                  High-Availability Infrastructure
+                </h2>
+                <p className="text-base text-primary-muted leading-relaxed">
+                  We write clean, typed code and deploy to auto-scaling cloud environments to guarantee systems stay active 24/7. Whether serving remote field data sync pipelines or heavy B2B ledger database servers, our architectural patterns are optimized for low latency and bulletproof reliability.
+                </p>
+                <div className="flex gap-8 mt-4">
+                  <div>
+                    <h4 className="text-2xl font-bold font-display text-primary">99.99%</h4>
+                    <p className="text-[10px] text-primary-dim uppercase font-bold tracking-wider mt-1">Uptime SLA</p>
+                  </div>
+                  <div>
+                    <h4 className="text-2xl font-bold font-display text-primary">&lt;100ms</h4>
+                    <p className="text-[10px] text-primary-dim uppercase font-bold tracking-wider mt-1">Sync Latency</p>
+                  </div>
+                </div>
+              </ScrollReveal>
+              
+              <ScrollReveal direction="left" className="relative z-10">
+                <div className="glass-panel p-2 rounded-[24px] overflow-hidden shadow-glow-accent">
+                  <img 
+                    src={smartIndustry} 
+                    alt="DZ Infotech Cloud Control Room" 
+                    className="w-full h-auto rounded-[16px] object-cover hover:scale-[1.02] transition-transform duration-500" 
+                  />
+                </div>
+              </ScrollReveal>
+            </div>
+
+          </div>
         </div>
       </section>
 

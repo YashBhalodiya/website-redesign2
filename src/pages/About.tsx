@@ -2,6 +2,7 @@ import { Target, TrendingUp, Calendar, Info } from 'lucide-react';
 import { motion } from 'framer-motion';
 import ScrollReveal from '../components/ui/ScrollReveal';
 import React from 'react';
+import heroConstructionTech from '../assets/hero_construction_tech.png';
 
 
 const timelineSteps = [
@@ -56,8 +57,10 @@ export default function About() {
       <section className="relative pt-20 pb-20 md:py-28">
         <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-accent/8 rounded-full blur-[120px] pointer-events-none" />
         <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
-          <ScrollReveal>
-            <div className="text-left max-w-3xl flex flex-col items-start gap-5">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            
+            {/* Left Column */}
+            <ScrollReveal className="lg:col-span-7 text-left flex flex-col items-start gap-5">
               <span className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-bold tracking-widest uppercase border border-accent/20 bg-accent/5 text-accent-light backdrop-blur-sm">
                 <Info className="h-3.5 w-3.5" />
                 Our Identity
@@ -65,11 +68,24 @@ export default function About() {
               <h1 className="text-4xl sm:text-5xl font-display font-extrabold text-primary tracking-tight leading-[1.1]">
                 Building Pragmatic Technology for the Real World
               </h1>
-              <p className="text-base text-primary-muted leading-relaxed max-w-2xl">
+              <p className="text-base text-primary-muted leading-relaxed">
                 Based in Bhavnagar, Gujarat, DZ Infotech is a software engineering firm focused on developing robust digital tools that automate remote site logs, consolidate project margins, and drive cost control.
               </p>
-            </div>
-          </ScrollReveal>
+            </ScrollReveal>
+
+            {/* Right Column */}
+            <ScrollReveal direction="left" className="lg:col-span-5">
+              <div className="spotlight-card p-2 rounded-[24px] shadow-glow-accent relative overflow-hidden" onMouseMove={handleMouseMove}>
+                <div className="absolute top-0 right-0 w-32 h-32 bg-accent/10 rounded-full blur-2xl pointer-events-none" />
+                <img 
+                  src={heroConstructionTech} 
+                  alt="DZ Infotech Smart Construction" 
+                  className="w-full h-auto rounded-[16px] object-cover hover:scale-[1.02] transition-transform duration-500" 
+                />
+              </div>
+            </ScrollReveal>
+
+          </div>
         </div>
       </section>
 

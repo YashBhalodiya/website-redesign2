@@ -8,6 +8,8 @@ import {
 } from 'lucide-react';
 import { fadeInUp, staggerContainer } from '../animations/variants';
 import ScrollReveal from '../components/ui/ScrollReveal';
+import contrackDashboard from '../assets/contrack_dashboard.png';
+import mobileAppInHand from '../assets/mobile_app_in_hand.png';
 
 
 const capabilities = [
@@ -441,6 +443,72 @@ export default function Home() {
             </div>
           </ScrollReveal>
 
+        </div>
+      </section>
+
+      {/* Complete Site & Asset Visibility Section (AI Image showcase) */}
+      <section className="py-28 md:py-36 relative z-10">
+        <div className="max-w-7xl mx-auto px-6 md:px-12">
+          
+          <ScrollReveal>
+            <div className="text-center max-w-3xl mx-auto mb-20">
+              <span className="text-xs font-bold uppercase tracking-widest text-accent mb-3">Product Suite</span>
+              <h2 className="text-3xl sm:text-4xl font-display font-extrabold text-primary tracking-tight">
+                Complete Site & Asset Visibility
+              </h2>
+              <p className="text-base text-primary-muted mt-4 font-normal max-w-2xl mx-auto">
+                Discover the two core platforms designed to digitize field logging and secure back-office budgeting.
+              </p>
+            </div>
+          </ScrollReveal>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start mt-12">
+            
+            {/* Left: Web Dashboard showcase */}
+            <ScrollReveal direction="up" className="flex flex-col gap-6 text-left">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-bold uppercase tracking-widest text-accent-light border border-accent-light/20 bg-accent-light/5 px-4 py-2 rounded-full">
+                  Web Control Center
+                </span>
+              </div>
+              <h3 className="text-2xl font-bold font-display text-primary tracking-tight">
+                Consolidated Corporate Ledger & Tender Processing
+              </h3>
+              <p className="text-sm text-primary-muted leading-relaxed">
+                Analyze and manage budgets, detect transactional leaks, and parse tender documents instantly from a secure web console. ConTrack aggregates remote data into actionable summaries.
+              </p>
+              <div className="relative glass-panel p-2 rounded-[24px] overflow-hidden mt-4 shadow-glow-accent">
+                <img 
+                  src={contrackDashboard} 
+                  alt="ConTrack Web Dashboard" 
+                  className="w-full h-auto rounded-[16px] object-cover hover:scale-[1.02] transition-transform duration-500" 
+                />
+              </div>
+            </ScrollReveal>
+
+            {/* Right: Mobile app showcase */}
+            <ScrollReveal direction="up" className="flex flex-col gap-6 text-left">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-bold uppercase tracking-widest text-accent border border-accent/20 bg-accent/5 px-4 py-2 rounded-full">
+                  Offline Mobile App
+                </span>
+              </div>
+              <h3 className="text-2xl font-bold font-display text-primary tracking-tight">
+                Rugged Field Tracking for Remote Crews
+              </h3>
+              <p className="text-sm text-primary-muted leading-relaxed">
+                Empower your supervisors and operators to capture fuel registers, labor card drops, and progress logs even when fully offline. Automatically synchronization once online.
+              </p>
+              <div className="relative glass-panel p-2 rounded-[24px] overflow-hidden mt-4 shadow-glow-accent">
+                <img 
+                  src={mobileAppInHand} 
+                  alt="ConTrack Mobile Application" 
+                  className="w-full h-auto rounded-[16px] object-cover hover:scale-[1.02] transition-transform duration-500" 
+                />
+              </div>
+            </ScrollReveal>
+
+          </div>
         </div>
       </section>
 

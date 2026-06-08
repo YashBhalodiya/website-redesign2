@@ -1,8 +1,10 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { CheckCircle, Download, Smartphone, Layers, Activity } from 'lucide-react';
+import { CheckCircle, Download, Smartphone, Layers } from 'lucide-react';
 import { staggerContainer } from '../animations/variants';
 import ScrollReveal from '../components/ui/ScrollReveal';
+import contrackDashboard from '../assets/contrack_dashboard.png';
+import mobileAppInHand from '../assets/mobile_app_in_hand.png';
 
 
 const detailedFeatures = [
@@ -84,44 +86,15 @@ export default function Product() {
               </div>
             </motion.div>
 
-            {/* Right Graphics (App Console Mockup) */}
+            {/* Right Graphics (App Mockup Image) */}
             <ScrollReveal direction="left" className="lg:col-span-5 relative z-10">
-              <div className="spotlight-card p-4 rounded-[24px] shadow-glow-accent relative overflow-hidden" onMouseMove={handleMouseMove}>
-                <div className="absolute top-0 right-0 w-32 h-32 bg-accent-light/5 rounded-full blur-2xl pointer-events-none" />
-                
-                <div className="bg-[#020408] border border-white/5 rounded-[16px] p-5 flex flex-col gap-6">
-                  <div className="flex items-center justify-between border-b border-white/5 pb-4">
-                    <div className="flex items-center gap-3">
-                      <div className="h-10 w-10 bg-accent/5 border border-accent/20 rounded-[12px] flex items-center justify-center text-accent-light">
-                        <Smartphone className="h-5 w-5" />
-                      </div>
-                      <div className="text-left">
-                        <h4 className="text-sm font-bold text-white">ConTrack Mobile Console</h4>
-                        <span className="text-[9px] text-primary-dim uppercase tracking-wider font-bold">Version 2.4.1 (Stable)</span>
-                      </div>
-                    </div>
-                    <span className="text-[10px] bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 px-2.5 py-1 rounded-full font-bold">Active</span>
-                  </div>
-                  
-                  {/* Simulated Screen lists */}
-                  <div className="flex flex-col gap-3 font-mono text-[11px] text-left">
-                    <div className="bg-white/[0.01] border border-white/5 p-3.5 rounded-[12px] flex items-center justify-between">
-                      <span className="text-primary-muted font-medium">Total Active Sites</span>
-                      <span className="text-white font-bold">4 Sites Online</span>
-                    </div>
-                    <div className="bg-white/[0.01] border border-white/5 p-3.5 rounded-[12px] flex items-center justify-between">
-                      <span className="text-primary-muted font-medium">Auto-Sync Queue</span>
-                      <span className="text-emerald-400 font-bold flex items-center gap-1.5">
-                        <Activity className="h-3.5 w-3.5 text-emerald-400" />
-                        0 Pending
-                      </span>
-                    </div>
-                    <div className="bg-white/[0.01] border border-white/5 p-3.5 rounded-[12px] flex items-center justify-between">
-                      <span className="text-primary-muted font-medium">Weekly Fuel Checked</span>
-                      <span className="text-accent-light font-bold">14,200 Litres</span>
-                    </div>
-                  </div>
-                </div>
+              <div className="spotlight-card p-2 rounded-[28px] shadow-glow-accent relative overflow-hidden" onMouseMove={handleMouseMove}>
+                <div className="absolute top-0 right-0 w-32 h-32 bg-accent/10 rounded-full blur-2xl pointer-events-none" />
+                <img 
+                  src={mobileAppInHand} 
+                  alt="ConTrack Mobile App in Action" 
+                  className="w-full h-auto rounded-[20px] object-cover hover:scale-[1.02] transition-transform duration-500" 
+                />
               </div>
             </ScrollReveal>
 
@@ -172,6 +145,51 @@ export default function Product() {
             </div>
           </ScrollReveal>
 
+        </div>
+      </section>
+
+      {/* Centralized Web Control Console */}
+      <section className="py-24 bg-background relative z-10">
+        <div className="max-w-7xl mx-auto px-6 md:px-12">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
+            
+            <ScrollReveal className="lg:col-span-5 flex flex-col items-start gap-6 text-left">
+              <span className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-bold tracking-widest uppercase border border-accent-light/20 bg-accent-light/5 text-accent-light">
+                Web Control Console
+              </span>
+              <h2 className="text-3xl sm:text-4xl font-display font-extrabold text-primary tracking-tight">
+                Stop Cost Overruns From a Central Dashboard
+              </h2>
+              <p className="text-base text-primary-muted leading-relaxed">
+                Connect your active project sites to a single control center. Track excavator hours, reconcile fuel logs, review material drops, and monitor budget margins in real-time. DZ Infotech's web dashboard parses messy field data and exposes anomalies immediately.
+              </p>
+              
+              <div className="flex flex-col gap-4 w-full">
+                {[
+                  "Real-time expense reconciliation",
+                  "Automated double-billing alerts",
+                  "Tender schedule line-item exports"
+                ].map((item, idx) => (
+                  <div key={idx} className="flex items-center gap-3 text-sm text-primary-muted font-semibold">
+                    <span className="h-2 w-2 rounded-full bg-accent-light" />
+                    {item}
+                  </div>
+                ))}
+              </div>
+            </ScrollReveal>
+
+            <ScrollReveal direction="left" className="lg:col-span-7">
+              <div className="spotlight-card p-2.5 rounded-[24px] shadow-glow-accent relative overflow-hidden" onMouseMove={handleMouseMove}>
+                <div className="absolute top-0 right-0 w-48 h-48 bg-accent-light/5 rounded-full blur-3xl pointer-events-none" />
+                <img 
+                  src={contrackDashboard} 
+                  alt="ConTrack Web Control Center" 
+                  className="w-full h-auto rounded-[16px] object-cover hover:scale-[1.01] transition-transform duration-500" 
+                />
+              </div>
+            </ScrollReveal>
+
+          </div>
         </div>
       </section>
 
